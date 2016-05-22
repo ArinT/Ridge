@@ -18,7 +18,7 @@ class TestTile(unittest.TestCase):
         assert (1 == p.get_defense_value())
         assert (2 == f.get_defense_value())
         assert ("X" == m.get_defense_value())
-        assert (4 == c.get_defense_value())
+        assert ("X" == c.get_defense_value())
         #assert ("PixelArt/road.png" == r.get_image_path())
         #assert ("PixelArt/plain.png" == p.get_image_path())
         #assert ("PixelArt/forest.png" == f.get_image_path())

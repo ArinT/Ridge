@@ -6,12 +6,15 @@ from Models.Units.GreaserUnit import GreaserUnit
 from Models.Units.SquabblerUnit import SquabblerUnit
 from Models.Map import Map
 from Models.Units.Constants import CONST
-
+import pygame
 
 class TestSpecialAttack(unittest.TestCase):
-    def testGreaserSpecial(self):
+    def setUp(self):
+        pygame.init()
+
+    def test_greaser_special(self):
         m = Map(10, 10)
-        m.generate_from_ascii("../Models/Maps/10by10.txt")
+        m.generate_from_ascii("Models/Maps/10by10.txt")
         s = SquabblerUnit(8, 3, m, CONST.jets)
         g = GreaserUnit(8, 4, m, CONST.sharks)
         b = BruiserUnit(8, 5, m, CONST.jets)
@@ -20,18 +23,18 @@ class TestSpecialAttack(unittest.TestCase):
         assert (g.special_attack(8, 5))
         assert (bh > b.hp and sh > s.hp)
 
-    def testSquabblerSpecial(self):
+    def test_squabbler_special(self):
         m = Map(10, 10)
-        m.generate_from_ascii("../Models/Maps/10by10.txt")
+        m.generate_from_ascii("Models/Maps/10by10.txt")
         s = SquabblerUnit(8, 3, m, CONST.jets)
         g = GreaserUnit(8, 4, m, CONST.sharks)
         gw = g.wit
         s.special_attack(8, 4)
         assert (g.demoralize)
 
-    def testBruiserSpecialShove(self):
+    def test_bruiser_special_shove(self):
         m = Map(10, 10)
-        m.generate_from_ascii("../Models/Maps/10by10.txt")
+        m.generate_from_ascii("Models/Maps/10by10.txt")
         g = GreaserUnit(8, 4, m, CONST.sharks)
         b = BruiserUnit(8, 5, m, CONST.jets)
         gh = g.hp
@@ -39,9 +42,9 @@ class TestSpecialAttack(unittest.TestCase):
         assert (gh > g.hp)
         assert (m.unit_at(8, 3) is g)
 
-    def testBruiserSpecialCollide(self):
+    def test_bruiser_special_collide(self):
         m = Map(10, 10)
-        m.generate_from_ascii("../Models/Maps/10by10.txt")
+        m.generate_from_ascii("Models/Maps/10by10.txt")
         s = GreaserUnit(8, 3, m, CONST.sharks)
         g = GreaserUnit(8, 4, m, CONST.sharks)
         b = BruiserUnit(8, 5, m, CONST.jets)
