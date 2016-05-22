@@ -1,7 +1,7 @@
 __author__ = 'Arin'
-from Tile import Tile
+from tile import Tile
 
-path = "PixelArt/gs.png"
+path = "pixel_art/gs.png"
 
 
 class GrassTile(Tile):

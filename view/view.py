@@ -1,11 +1,11 @@
 __author__ = 'Arin'
 import pygame
-from TileSprite import TileSprite
-from UnitSprite import UnitSprite
-from CursorSprite import CursorSprite
-from MenuSprite import MenuSprite
-from InfoPane import InfoPane
-from Models.Units.Constants import CONST
+from tile_sprite import TileSprite
+from unit_sprite import UnitSprite
+from cursor_sprite import CursorSprite
+from menu_sprite import MenuSprite
+from info_pane import InfoPane
+from models.units.constants import CONST
 import time
 import math
 import os

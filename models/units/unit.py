@@ -1,7 +1,7 @@
 __author__ = 'Arin'
 import abc
 import pygame,os
-from Models.Units.Constants import CONST
+from models.units.constants import CONST
 
 class Unit(object):
     """Unit abtract class. Every unit has the same same stat fields."""

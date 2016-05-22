@@ -4,7 +4,7 @@ class MenuSprite(pygame.sprite.Sprite):
     """Cursor class. A small border which highlights your selected tile"""
     def __init__(self, cursor, col, row):
         pygame.sprite.Sprite.__init__(self)
-        self.image, self.rect = self.load_sprite(os.path.join("PixelArt","mainmenu.png"))
+        self.image, self.rect = self.load_sprite(os.path.join("pixel_art","mainmenu.png"))
         self.cursor = cursor
         self.rect.topleft = self.cursor.x*60, self.cursor.y*60
         self.is_open = False

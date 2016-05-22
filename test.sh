@@ -1,7 +1,7 @@
 . activate
-python Tests/MapTest.py
-python Tests/UnitTest.py
-python Tests/ModelManipulationTest.py
-python Tests/SpecialAttackTest.py
-python Tests/TileTest.py 
+python tests/test_map.py
+python tests/test_unit.py
+python tests/test_model_manipulation.py
+python tests/test_special_attack.py
+python tests/test_tile.py 
 deactivate

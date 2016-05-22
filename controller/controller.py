@@ -1,7 +1,8 @@
 __author__ = 'Arin'
 from pygame.locals import *
 import pygame,os
-from Models.Units.Constants import CONST
+from models.units.constants import CONST
+
 def load_sound(name):
     class NoneSound:
         def play(self): pass

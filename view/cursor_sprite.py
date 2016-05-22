@@ -5,7 +5,7 @@ class CursorSprite(pygame.sprite.Sprite):
     """Cursor class. A small border which highlights your selected tile"""
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image, self.rect = self.load_sprite(os.path.join("PixelArt","Cursor.png"))
+        self.image, self.rect = self.load_sprite(os.path.join("pixel_art","Cursor.png"))
         self.x = 0
         self.y = 0
         self.rect.topleft = self.x*60, self.y*60

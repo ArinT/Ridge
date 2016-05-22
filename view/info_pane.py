@@ -1,17 +1,17 @@
 __author__ = 'Arin'
 import pygame, os
-from DummySprite import DummySprite
-from DummyTileSprite import DummyTileSprite
-from Models.Units.Constants import CONST
-from Models.Units.BruiserUnit import BruiserUnit
-from Models.Units.GreaserUnit import GreaserUnit
-from Models.Units.SquabblerUnit import SquabblerUnit
-from Models.Tiles.WallTile import WallTile
-from Models.Tiles.SceneryTile import SceneryTile
-from Models.Tiles.ConcreteTile import ConcreteTile
-from Models.Tiles.GrassTile import GrassTile
-from Models.Tiles.RoadTile import RoadTile
-from Models.Tiles.SpecialTile import SpecialTile
+from dummy_sprite import DummySprite
+from dummy_tile_sprite import DummyTileSprite
+from models.units.constants import CONST
+from models.units.bruiser_unit import BruiserUnit
+from models.units.greaser_unit import GreaserUnit
+from models.units.squabbler_unit import SquabblerUnit
+from models.tiles.wall_tile import WallTile
+from models.tiles.scenery_tile import SceneryTile
+from models.tiles.concrete_tile import ConcreteTile
+from models.tiles.grass_tile import GrassTile
+from models.tiles.road_tile import RoadTile
+from models.tiles.special_tile import SpecialTile
 import math
 
 class InfoPane(object):

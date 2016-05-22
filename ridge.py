@@ -1,10 +1,10 @@
 __author__ = 'Arin'
 import pygame, os, time
 from pygame.locals import *
-from Controller.Controller import Controller
-from Controller.EventHandler import EventHandler
-from Models.Map import Map
-from View.View import View
+from controller.controller import Controller
+from controller.event_handler import EventHandler
+from models.map import Map
+from view.view import View
 
 
 #TODO: WISHLIST: More Info pane stats
@@ -29,7 +29,7 @@ def main():
     map = Map(32, 18)
     clock = pygame.time.Clock()
     start_music("sfx/onestop.mid")
-    map.generate_from_ascii("Models/Maps/TheBlock.txt")
+    map.generate_from_ascii("models/maps/TheBlock.txt")
     map.quick_board_32_18()
     view = View(map)
     ev_handler = EventHandler()
@@ -58,7 +58,7 @@ def end_game(clock, view):
         end = time.time()
 
 def tutorial_screen(clock, view):
-    tutorial = load_image("PixelArt/Tutorial.png")
+    tutorial = load_image("pixel_art/Tutorial.png")
     cont = False
     fade_in(clock, tutorial, view)
     while not cont:
@@ -71,7 +71,7 @@ def tutorial_screen(clock, view):
 
 
 def main_menu(clock, view):
-    start = load_image("PixelArt/WWSTG.jpg")
+    start = load_image("pixel_art/WWSTG.jpg")
     begin = False
     fade_in(clock, start, view)
     while not begin:
@@ -82,7 +82,7 @@ def main_menu(clock, view):
             if event.type == KEYDOWN:
                 begin = True
 def game_over(clock, view):
-    game_over_screen = load_image("PixelArt/WWSTG_GO.jpg")
+    game_over_screen = load_image("pixel_art/WWSTG_GO.jpg")
     start_music("sfx/town.mid")
     end = False
     fade_in(clock,game_over_screen,view)

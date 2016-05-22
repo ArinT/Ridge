@@ -1,8 +1,8 @@
 __author__ = 'Arin'
-from Tile import Tile
+from tile import Tile
 
-path = ["PixelArt/rd.png",
-        "PixelArt/rdm.png"]
+path = ["pixel_art/rd.png",
+        "pixel_art/rdm.png"]
 
 
 class RoadTile(Tile):

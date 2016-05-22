@@ -1,14 +1,14 @@
 __author__ = 'Arin'
-from Models.Tiles.WallTile import WallTile
-from Models.Tiles.SceneryTile import SceneryTile
-from Models.Tiles.ConcreteTile import ConcreteTile
-from Models.Tiles.RoadTile import RoadTile
-from Models.Tiles.GrassTile import GrassTile
-from Models.Tiles.SpecialTile import SpecialTile
-from Models.Units.Constants import CONST
-from Models.Units.GreaserUnit import GreaserUnit
-from Models.Units.BruiserUnit import BruiserUnit
-from Models.Units.SquabblerUnit import SquabblerUnit
+from models.tiles.wall_tile import WallTile
+from models.tiles.scenery_tile import SceneryTile
+from models.tiles.concrete_tile import ConcreteTile
+from models.tiles.road_tile import RoadTile
+from models.tiles.grass_tile import GrassTile
+from models.tiles.special_tile import SpecialTile
+from models.units.constants import CONST
+from models.units.greaser_unit import GreaserUnit
+from models.units.bruiser_unit import BruiserUnit
+from models.units.squabbler_unit import SquabblerUnit
 import time
 import os
 import pygame

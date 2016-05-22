@@ -1,8 +1,8 @@
 __author__ = 'Arin'
 import random
 
-from Unit import Unit, m_dist
-from Constants import CONST
+from unit import Unit, m_dist
+from constants import CONST
 
 
 class SquabblerUnit(Unit):

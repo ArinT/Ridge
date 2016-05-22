@@ -1,11 +1,11 @@
 __author__ = 'Arin'
 import unittest
 
-from Models.Units.BruiserUnit import BruiserUnit
-from Models.Units.GreaserUnit import GreaserUnit
-from Models.Units.SquabblerUnit import SquabblerUnit
-from Models.Map import Map
-from Models.Units.Constants import CONST
+from models.units.bruiser_unit import BruiserUnit
+from models.units.greaser_unit import GreaserUnit
+from models.units.squabbler_unit import SquabblerUnit
+from models.map import Map
+from models.units.constants import CONST
 import pygame
 
 class TestSpecialAttack(unittest.TestCase):
@@ -14,7 +14,7 @@ class TestSpecialAttack(unittest.TestCase):
 
     def test_greaser_special(self):
         m = Map(10, 10)
-        m.generate_from_ascii("Models/Maps/10by10.txt")
+        m.generate_from_ascii("models/maps/10by10.txt")
         s = SquabblerUnit(8, 3, m, CONST.jets)
         g = GreaserUnit(8, 4, m, CONST.sharks)
         b = BruiserUnit(8, 5, m, CONST.jets)
@@ -25,7 +25,7 @@ class TestSpecialAttack(unittest.TestCase):
 
     def test_squabbler_special(self):
         m = Map(10, 10)
-        m.generate_from_ascii("Models/Maps/10by10.txt")
+        m.generate_from_ascii("models/maps/10by10.txt")
         s = SquabblerUnit(8, 3, m, CONST.jets)
         g = GreaserUnit(8, 4, m, CONST.sharks)
         gw = g.wit
@@ -34,7 +34,7 @@ class TestSpecialAttack(unittest.TestCase):
 
     def test_bruiser_special_shove(self):
         m = Map(10, 10)
-        m.generate_from_ascii("Models/Maps/10by10.txt")
+        m.generate_from_ascii("models/maps/10by10.txt")
         g = GreaserUnit(8, 4, m, CONST.sharks)
         b = BruiserUnit(8, 5, m, CONST.jets)
         gh = g.hp
@@ -44,7 +44,7 @@ class TestSpecialAttack(unittest.TestCase):
 
     def test_bruiser_special_collide(self):
         m = Map(10, 10)
-        m.generate_from_ascii("Models/Maps/10by10.txt")
+        m.generate_from_ascii("models/maps/10by10.txt")
         s = GreaserUnit(8, 3, m, CONST.sharks)
         g = GreaserUnit(8, 4, m, CONST.sharks)
         b = BruiserUnit(8, 5, m, CONST.jets)
