@@ -1,2 +1,0 @@
-# Ridge
-TBS python game

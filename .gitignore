@@ -4,3 +4,5 @@ Final2ManualTestPlan.txt
 env
 activate
 *.pyc
+*.o
+*.a
