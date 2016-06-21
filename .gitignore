@@ -1,8 +1,9 @@
-Arin_Tsikretsis_CS242_Final_Project_Proposal.pdf
-Balancing_chart.txt
-Final2ManualTestPlan.txt
-env
-activate
+python/Arin_Tsikretsis_CS242_Final_Project_Proposal.pdf
+python/Balancing_chart.txt
+python/Final2ManualTestPlan.txt
+python/env
+python/activate
 *.pyc
 *.o
 *.a
+*.swp

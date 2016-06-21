@@ -20,4 +20,5 @@ Unit::Unit(
 { 
     hp = max_hp;
 }
-    
+Unit::~Unit() {
+}    

@@ -6,26 +6,34 @@
 
 class Tile {
     public:
-        Tile();
         Tile(
             int defense, 
             std::string img_path, 
-            bool is_accessible, 
+            bool accessible, 
             int x, 
             int y
         );
         ~Tile();
         bool remove_unit();
         bool add_unit(Unit *unit);
+        int get_defense() { return defense; } 
+        int get_x() { return x; } 
+        int get_y() { return y; }
+        std::string get_img_path() { return img_path; }
+        bool is_accessible() { return accessible; }
+        bool is_occupied() { return occupied; }
+        bool is_marked() { return marked; }
+        bool is_attack_marked() { return attack_marked; }
+        Unit* get_unit() { return unit; } 
     protected:
         int defense;
         std::string img_path;
-        bool is_accessible;
+        bool accessible;
         int x;
         int y;
         Unit *unit;
         bool marked;
         bool attack_marked;
-        bool is_occupied;
+        bool occupied;
 };
 #endif

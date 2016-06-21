@@ -15,6 +15,7 @@ class Unit {
             int x,
             int y
         );
+        ~Unit();
         int get_movement_range() { return movement_range; }
         int get_max_hp() { return max_hp; }
         int get_hp() { return hp; }
