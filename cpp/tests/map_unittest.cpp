@@ -14,4 +14,5 @@ TEST_F(MapTest, BasicConstructor) {
     EXPECT_EQ(3, map->tile_matrix.size());
     EXPECT_EQ(3, map->tile_matrix[0].size());
     EXPECT_EQ(Constants::Team::Sharks, map->get_turn());
+    delete map;
 }

@@ -20,11 +20,14 @@ class Map {
         list<Unit*> unit_list;
         vector<vector<Tile*>> tile_matrix;
         Constants::Team current_turn;
-        void initialize_tile_matrix(); 
+        void initialize_tile_matrix();
+        void destroy_unit_list();
+        void destroy_tile_matrix(); 
     public:
         Tile get_tile(int x, int y);
         bool add_unit(Unit* unit);
         bool remove_unit(Unit* unit);
         Map(int col, int row);
+        ~Map();
         Constants::Team get_turn() { return current_turn; };
 };
