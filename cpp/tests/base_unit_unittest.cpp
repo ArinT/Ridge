@@ -14,5 +14,4 @@ TEST(BaseUnitTest, BasicConstructor) {
     EXPECT_EQ(1, unit->get_y());
     
     delete unit;
-    
 }

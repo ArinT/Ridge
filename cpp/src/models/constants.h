@@ -1,3 +1,5 @@
+#ifndef RIDGE_MODELS_CONSTANTS_H
+#define RIDGE_MODELS_CONSTANTS_H
 #include <string>
 
 class Constants {
@@ -5,9 +7,7 @@ class Constants {
         enum class Team {
             Sharks,
             Jets
-        }
-        static const int bruiser_max_hp;
-        static const int bruiser;
+        };
         static const int bruiser_max_hp;
         static const int bruiser_min_hp;
         static const int bruiser_max_strength;
@@ -41,49 +41,53 @@ class Constants {
         class UnitImagePaths {
             public:
                 class Jets {
-                    static const string squabler;
-                    static const string greaser;
-                    static const string bruiser;
-                } 
+                    public:
+                        static const std::string squabbler;
+                        static const std::string greaser;
+                        static const std::string bruiser;
+                }; 
                 class Sharks {
-                    static const string squabler;
-                    static const string greaser;
-                    static const string bruiser;
-                } 
-        }
+                    public:
+                        static const std::string squabbler;
+                        static const std::string greaser;
+                        static const std::string bruiser;
+                };
+        };
         class UnitImagePathsBkg {
             public:
                 class Jets {
-                    static const string squabler;
-                    static const string greaser;
-                    static const string bruiser;
-                } 
+                    public:
+                        static const std::string squabbler;
+                        static const std::string greaser;
+                        static const std::string bruiser;
+                };
                 class Sharks {
-                    static const string squabler;
-                    static const string greaser;
-                    static const string bruiser;
-                } 
-        }
+                    public:
+                        static const std::string squabbler;
+                        static const std::string greaser;
+                        static const std::string bruiser;
+                };
+        };
         class TileImagePaths {
             public:
-                static const string road_path; 
-                static const string grass_path;
-                static const string concrete_path;
-                static const string roof_path;
-                static const string trash_path;
-                static const string wall_path;
-                static const string none;
-        }
+                static const std::string road_path; 
+                static const std::string grass_path;
+                static const std::string concrete_path;
+                static const std::string roof_path;
+                static const std::string trash_path;
+                static const std::string wall_path;
+                static const std::string empty;
+        };
         class UnitSFXPaths {
             public:
-                static const string bruiser_attack;
-                static const string greaser_attack;
-                static const string squabler_attack
-                static const string move;
-                static const string confirm;
-                static const string cancel;
-                static const string turn_sound;
-        }
+                static const std::string bruiser_attack;
+                static const std::string greaser_attack;
+                static const std::string squabbler_attack;
+                static const std::string move;
+                static const std::string confirm;
+                static const std::string cancel;
+                static const std::string turn_sound;
+        };
         static const int bruiser_movement;
         static const int squabbler_movement;
         static const int greaser_movement;
@@ -93,5 +97,7 @@ class Constants {
             Menu,
             Attack,
             Special
-        }
-}
+        };
+};
+
+#endif

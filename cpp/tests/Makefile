@@ -25,11 +25,11 @@ USER_DIR = /home/arin/Desktop/Ridge/cpp
 CPPFLAGS += -isystem $(GTEST_DIR)/include
 
 # Flags passed to the C++ compiler.
-CXXFLAGS += -g -Wall -Wextra -pthread
+CXXFLAGS += -std=c++11 -g -Wall -Wextra -pthread
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = base_tile_unittest base_unit_unittest
+TESTS = base_tile_unittest base_unit_unittest constants_unittest map_unittest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -70,11 +70,12 @@ gtest_main.a : gtest-all.o gtest_main.o
 # Builds a sample test.  A test should link with either gtest.a or
 # gtest_main.a, depending on whether it defines its own main()
 # function.
-
+MODELS_DIR = $(USER_DIR)/src/models
 TILE_DIR = $(USER_DIR)/src/models/tiles
 UNIT_DIR = $(USER_DIR)/src/models/units
 TEST_DIR = $(USER_DIR)/tests
 
+CPPFLAGS += -I$(MODELS_DIR)
 CPPFLAGS += -I$(TILE_DIR)
 CPPFLAGS += -I$(UNIT_DIR)
 CPPFLAGS += -I$(TEST_DIR)
@@ -90,19 +91,49 @@ base_tile.o : $(TILE_DIR)/base_tile.h \
               $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TILE_DIR)/base_tile.cpp
 
+map.o : $(MODELS_DIR)/map.h \
+              $(MODELS_DIR)/map.cpp \
+              $(MODELS_DIR)/constants.h \
+              $(TILE_DIR)/base_tile.h \
+              $(UNIT_DIR)/base_unit.h
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(MODELS_DIR)/map.cpp
+
+constants.o : $(MODELS_DIR)/constants.h \
+              $(MODELS_DIR)/constants.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(MODELS_DIR)/constants.cpp
+
 base_tile_unittest.o : $(TEST_DIR)/base_tile_unittest.cpp \
-                     $(TILE_DIR)/base_tile.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/tests/base_tile_unittest.cpp
+                     $(TILE_DIR)/base_tile.h \
+                     $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/base_tile_unittest.cpp
 
 base_unit_unittest.o : $(TEST_DIR)/base_unit_unittest.cpp \
-                     $(UNIT_DIR)/base_unit.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/tests/base_unit_unittest.cpp
+                     $(UNIT_DIR)/base_unit.h \
+                     $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/base_unit_unittest.cpp
 
-OBJS = base_unit.o base_tile.o
+map_unittest.o : $(TEST_DIR)/map_unittest.cpp \
+                     $(MODELS_DIR)/map.h \
+                     $(MODELS_DIR)/constants.h \
+                     $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/map_unittest.cpp
+
+constants_unittest.o : $(TEST_DIR)/constants_unittest.cpp \
+                     $(MODELS_DIR)/constants.h \
+                     $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/constants_unittest.cpp
+
+OBJS = base_unit.o base_tile.o constants.o map.o
 
 base_unit_unittest : $(OBJS) base_unit_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
 base_tile_unittest : $(OBJS) base_tile_unittest.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+constants_unittest : $(OBJS) constants_unittest.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+map_unittest : $(OBJS) map_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
