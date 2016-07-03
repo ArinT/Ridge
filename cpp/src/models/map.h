@@ -28,11 +28,13 @@ class Map {
         Unit* get_unit(int x, int y);
         bool add_unit(Unit* unit);
         bool remove_unit(Unit* unit);
+        Unit* unit_at(int x, int y);
         bool is_occupied(int x, int y);
+        bool is_enemy_occupied(int x, int y, Constants::Team team);
         bool is_accessible(int x, int y);
-        bool can_go_to(int x, int y, Constants::Team team);
+        bool can_go_to(int x, int y);
         bool can_go_through(int x, int y, Constants::Team team);
-        bool out_of_bound(int x, int y);
+        bool out_of_bounds(int x, int y);
         Map(int col, int row);
         ~Map();
         Constants::Team get_turn() { return current_turn; };

@@ -42,7 +42,7 @@ bool Map::add_unit(Unit* unit) {
     }
 }
 
-bool Map:remove_unit(Unit* unit) {
+bool Map::remove_unit(Unit* unit) {
     int x = unit->get_x();
     int y = unit->get_y();
     unit_list.remove(unit);
@@ -69,4 +69,37 @@ void Map::initialize_tile_matrix() {
         }
         tile_matrix.push_back(new_row); 
     }
+}
+
+bool Map::is_occupied(int x, int y) {
+    return tile_matrix[x][y]->is_occupied();
+}
+
+bool Map::is_enemy_occupied(int x, int y, Constants::Team team) {
+    return is_occupied(x, y) and !(unit_at(x, y)->get_team() == team);
+}
+
+bool Map::is_accessible(int x, int y) {
+    return tile_matrix[x][y]->is_accessible();
+}
+
+Unit* Map::unit_at(int x, int y) {
+    return tile_matrix[x][y]->get_unit();
+}
+
+bool Map::out_of_bounds(int x, int y) {
+    return x < 0 || x >= columns || y < 0 || y >= rows; 
+}
+bool Map::can_go_to(int x, int y) {
+    return ( 
+        !out_of_bounds(x, y) && 
+        is_accessible(x, y) &&
+        !is_occupied(x, y));
+}
+
+bool Map::can_go_through(int x, int y, Constants::Team team) {
+    return ( 
+        !out_of_bounds(x, y) && 
+        is_accessible(x, y) &&
+        !is_enemy_occupied(x, y, team));
 }

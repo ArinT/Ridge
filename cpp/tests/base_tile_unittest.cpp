@@ -1,5 +1,6 @@
 #include "base_tile.h"
 #include "gtest/gtest.h"
+#include "constants.h"
 
 class BaseTileTest : public testing::Test {
     protected:
@@ -24,7 +25,7 @@ TEST_F(BaseTileTest, BasicConstructor) {
 }
 
 TEST_F(BaseTileTest, AddUnit) {
-    Unit* unit = new Unit(6, 10, 5, 6, 7, 8, 1, 1);
+    Unit* unit = new Unit(6, 10, 5, 6, 7, 8, 1, 1, Constants::Team::Sharks);
     tile->add_unit(unit);
     EXPECT_EQ(unit, tile->get_unit());
     delete unit;

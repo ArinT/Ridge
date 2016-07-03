@@ -2,6 +2,7 @@
 #define RIDGE_UNITS_BASE_H
 
 #include <string>
+#include "constants.h"
 
 class Unit {
     public:
@@ -13,7 +14,8 @@ class Unit {
             int wit, 
             int style,
             int x,
-            int y
+            int y,
+            Constants::Team team
         );
         ~Unit();
         int get_movement_range() { return movement_range; }
@@ -25,6 +27,7 @@ class Unit {
         int get_style() { return style; }
         int get_x() { return x; }
         int get_y() { return y; }
+        Constants::Team get_team() { return team; }
     protected:
         int movement_range;
         int max_hp;
@@ -35,6 +38,7 @@ class Unit {
         int x;
         int y;
         int hp;
+        Constants::Team team;
 };
 
 #endif

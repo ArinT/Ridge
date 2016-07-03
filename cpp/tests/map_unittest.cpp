@@ -16,3 +16,6 @@ TEST_F(MapTest, BasicConstructor) {
     EXPECT_EQ(Constants::Team::Sharks, map->get_turn());
     delete map;
 }
+
+TEST_F(MapTest, LayTile) {
+} 
