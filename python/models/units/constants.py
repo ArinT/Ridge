@@ -60,6 +60,7 @@ class CONST(object):
     bruiser_movement = 4
     squabbler_movement = 5
     greaser_movement = 6
+    max_movement = max(bruiser_movement, squabbler_movement, greaser_movement)
     cncl = os.path.join("sfx","cancel.wav")
     turn_sound = os.path.join("sfx","congo.wav")
     none= os.path.join("pixel_art","empty.png")

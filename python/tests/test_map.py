@@ -111,6 +111,7 @@ class TestMapUtilities(unittest.TestCase):
         assert (right in neighbors)
         assert (left in neighbors)
 
+
     def test_neighboring_tiles_some_good(self):
         m = Map(10, 10)
         m.generate_from_ascii("models/maps/10by10.txt")
@@ -163,7 +164,7 @@ class TestAStar(unittest.TestCase):
         m.generate_from_ascii("models/maps/10by10test.txt")
         start = m.tile_matrix[1][1]
         end = m.tile_matrix[5][8]
-        path = m.a_star(start, end, CONST.jets)
+        path = m.a_star(start, end, CONST.jets, limit=20)
         for tile in path:
             assert (m.can_go_through(tile.x, tile.y, CONST.jets))
         assert (path[0] == start)
@@ -174,7 +175,7 @@ class TestAStar(unittest.TestCase):
         m.generate_from_ascii("models/maps/10by10funnel.txt")
         start = m.tile_matrix[4][2]
         end = m.tile_matrix[7][2]
-        path = m.a_star(start, end, CONST.jets)
+        path = m.a_star(start, end, CONST.jets, limit=20)
         for tile in path:
             assert (m.can_go_through(tile.x, tile.y, CONST.jets))
         assert (path[0] == start)
@@ -185,7 +186,7 @@ class TestAStar(unittest.TestCase):
         m.generate_from_ascii("models/maps/10by10funnel.txt")
         start = m.tile_matrix[8][1]
         end = m.tile_matrix[1][6]
-        path = m.a_star(start, end, CONST.jets)
+        path = m.a_star(start, end, CONST.jets, limit=20)
         for tile in path:
             assert (m.can_go_through(tile.x, tile.y, CONST.jets))
         assert (path[0] == start)
@@ -196,7 +197,7 @@ class TestAStar(unittest.TestCase):
         m.generate_from_ascii("models/maps/10by10divided.txt")
         start = m.tile_matrix[1][1]
         end = m.tile_matrix[1][7]
-        path = m.a_star(start, end, CONST.jets)
+        path = m.a_star(start, end, CONST.jets, limit=20)
         assert (len(path) == 0)
 
     def test_a_star_long_blocked_by_enemy(self):
@@ -205,7 +206,7 @@ class TestAStar(unittest.TestCase):
         start = m.tile_matrix[4][1]
         end = m.tile_matrix[4][7]
         g = GreaserUnit(4, 4, m, CONST.sharks) #shark blocking the path
-        path = m.a_star(start, end, CONST.jets)
+        path = m.a_star(start, end, CONST.jets, limit=20)
         assert (len(path) == 0)
 
     def test_a_star_long_blocked_by_friendly(self):
@@ -214,11 +215,21 @@ class TestAStar(unittest.TestCase):
         start = m.tile_matrix[4][1]
         end = m.tile_matrix[4][7]
         g = GreaserUnit(4, 4, m, CONST.jets)
-        path = m.a_star(start, end, CONST.jets)
+        path = m.a_star(start, end, CONST.jets, limit=20)
         for tile in path:
             assert (m.can_go_through(tile.x, tile.y, CONST.jets))
         assert (path[0] == start)
         assert (path[len(path) - 1] == end)
+    
+    def test_recreate_astar_no_path_bug(self):
+        m = Map(32,18)
+        m.generate_from_ascii("models/maps/TheBlock.txt")
+        g1 = GreaserUnit(12, 11, m, CONST.jets)
+        g3 = GreaserUnit(15, 11, m, CONST.sharks)
+        g4 = GreaserUnit(14, 12, m, CONST.sharks)
+        b1 = BruiserUnit(16, 12, m, CONST.sharks)
+        s3 = SquabblerUnit(15, 13, m, CONST.sharks)
+        g1.valid_moves()
 
     def test_rout(self):
         m = Map(10, 10)

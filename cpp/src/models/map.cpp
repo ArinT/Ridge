@@ -28,6 +28,29 @@ void Map::destroy_unit_list() {
     }
 }
 
+bool Map::add_unit(Unit* unit) {
+    int x = unit->get_x();
+    int y = unit->get_y();
+    if (tile_matrix[x][y] == NULL || tile_matrix[x][y]->is_occupied()) {
+        delete unit;
+        return false;
+    }
+    else {
+        tile_matrix[x][y]->add_unit(unit);
+        unit_list.push_back(unit);
+        return true;
+    }
+}
+
+bool Map:remove_unit(Unit* unit) {
+    int x = unit->get_x();
+    int y = unit->get_y();
+    unit_list.remove(unit);
+    tile_matrix[x][y]->remove_unit();
+    delete unit;
+    return true;
+}
+
 void Map::destroy_tile_matrix() {
     for (int i = 0; i < int(tile_matrix.size()) ; i++) {
         vector<Tile*> i_row = tile_matrix[i];

@@ -110,7 +110,7 @@ class Map():
         unit = path[0].remove_unit()
         path[len(path) - 1].add_unit(unit)
 
-    def a_star(self, start, goal, team):
+    def a_star(self, start, goal, team, limit=CONST.max_movement):
         """a* pathfinding algorithm"""
         #Heuristic estimate of the distance to the goal tile
         dist = manhattan_distance(start, goal)
@@ -128,7 +128,8 @@ class Map():
                 if neighbor not in closed_set and \
                                 neighbor not in open_set: #if we haven't searched it yet
                     score = manhattan_distance(neighbor, goal)
-                    open_set.add(Node(neighbor, score, current)) #search it
+                    if score <= limit:
+                        open_set.add(Node(neighbor, score, current)) #search it
         return []
 
     def retrace_path(self, current):

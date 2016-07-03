@@ -24,9 +24,15 @@ class Map {
         void destroy_unit_list();
         void destroy_tile_matrix(); 
     public:
-        Tile get_tile(int x, int y);
+        Tile* get_tile(int x, int y);
+        Unit* get_unit(int x, int y);
         bool add_unit(Unit* unit);
         bool remove_unit(Unit* unit);
+        bool is_occupied(int x, int y);
+        bool is_accessible(int x, int y);
+        bool can_go_to(int x, int y, Constants::Team team);
+        bool can_go_through(int x, int y, Constants::Team team);
+        bool out_of_bound(int x, int y);
         Map(int col, int row);
         ~Map();
         Constants::Team get_turn() { return current_turn; };
