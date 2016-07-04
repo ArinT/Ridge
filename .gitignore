@@ -3,6 +3,7 @@ python/Balancing_chart.txt
 python/Final2ManualTestPlan.txt
 python/env
 python/activate
+cpp/build/*
 *.pyc
 *.o
 *.a
