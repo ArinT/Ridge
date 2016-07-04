@@ -103,6 +103,20 @@ $(BUILD_DIR)/greaser_unit.o : $(UNIT_DIR)/greaser_unit.h \
                  $(BUILD_DIR)/constants.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(UNIT_DIR)/greaser_unit.cpp -o $(BUILD_DIR)/greaser_unit.o
               
+$(BUILD_DIR)/squabbler_unit.o : $(UNIT_DIR)/squabbler_unit.h \
+                 $(UNIT_DIR)/squabbler_unit.cpp \
+                 $(BUILD_DIR)/base_unit.o \
+                 $(BUILD_DIR)/utils.o \
+                 $(BUILD_DIR)/constants.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(UNIT_DIR)/squabbler_unit.cpp -o $(BUILD_DIR)/squabbler_unit.o
+              
+$(BUILD_DIR)/bruiser_unit.o : $(UNIT_DIR)/bruiser_unit.h \
+                 $(UNIT_DIR)/bruiser_unit.cpp \
+                 $(BUILD_DIR)/base_unit.o \
+                 $(BUILD_DIR)/utils.o \
+                 $(BUILD_DIR)/constants.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(UNIT_DIR)/bruiser_unit.cpp -o $(BUILD_DIR)/bruiser_unit.o
+              
 $(BUILD_DIR)/base_tile.o : $(TILE_DIR)/base_tile.h \
               $(TILE_DIR)/base_tile.cpp \
               $(BUILD_DIR)/base_unit.o
@@ -140,6 +154,8 @@ $(BUILD_DIR)/base_unit_unittest.o : $(TEST_DIR)/base_unit_unittest.cpp \
 $(BUILD_DIR)/sub_unit_unittest.o : $(TEST_DIR)/sub_unit_unittest.cpp \
                       $(BUILD_DIR)/base_unit.o \
                       $(BUILD_DIR)/greaser_unit.o \
+                      $(BUILD_DIR)/squabbler_unit.o \
+                      $(BUILD_DIR)/bruiser_unit.o \
                       $(BUILD_DIR)/constants.o \
                       $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/sub_unit_unittest.cpp -o $(BUILD_DIR)/sub_unit_unittest.o
@@ -161,7 +177,9 @@ OBJS = $(BUILD_DIR)/base_unit.o \
        $(BUILD_DIR)/map.o \
        $(BUILD_DIR)/sub_tile.o \
        $(BUILD_DIR)/utils.o \
-       $(BUILD_DIR)/greaser_unit.o
+       $(BUILD_DIR)/greaser_unit.o \
+       $(BUILD_DIR)/squabbler_unit.o \
+       $(BUILD_DIR)/bruiser_unit.o 
 
 base_unit_unittest : $(OBJS) $(BUILD_DIR)/base_unit_unittest.o $(BUILD_DIR)/gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $(BUILD_DIR)/$@
