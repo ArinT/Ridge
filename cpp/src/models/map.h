@@ -1,3 +1,6 @@
+#ifndef RIDGE_MODELS_MAP_H
+#define RIDGE_MODELS_MAP_H
+
 #include <vector>
 #include <list>
 
@@ -39,3 +42,5 @@ class Map {
         ~Map();
         Constants::Team get_turn() { return current_turn; };
 };
+
+#endif

@@ -3,4 +3,5 @@
 ./constants_unittest
 ./map_unittest
 ./sub_tile_unittest
+./sub_unit_unittest
 

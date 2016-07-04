@@ -29,7 +29,7 @@ CXXFLAGS += -std=c++11 -g -Wall -Wextra -pthread
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = base_tile_unittest base_unit_unittest constants_unittest map_unittest sub_tile_unittest
+TESTS = base_tile_unittest base_unit_unittest constants_unittest map_unittest sub_tile_unittest sub_unit_unittest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -80,12 +80,22 @@ CPPFLAGS += -I$(TILE_DIR)
 CPPFLAGS += -I$(UNIT_DIR)
 CPPFLAGS += -I$(TEST_DIR)
 
+utils.o : $(MODELS_DIR)/utils.h \
+          $(MODELS_DIR)/utils.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(MODELS_DIR)/utils.cpp
+
 base_unit.o : $(UNIT_DIR)/base_unit.h \
               $(UNIT_DIR)/base_unit.cpp \
               $(MODELS_DIR)/constants.h 
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(UNIT_DIR)/base_unit.cpp
-              
 
+greaser_unit.o : $(UNIT_DIR)/base_unit.h \
+              $(UNIT_DIR)/greaser_unit.h \
+              $(UNIT_DIR)/greaser_unit.cpp \
+              $(MODELS_DIR)/utils.h \
+              $(MODELS_DIR)/constants.h 
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(UNIT_DIR)/greaser_unit.cpp
+              
 base_tile.o : $(TILE_DIR)/base_tile.h \
               $(TILE_DIR)/base_tile.cpp \
               $(UNIT_DIR)/base_unit.o \
@@ -126,6 +136,13 @@ base_unit_unittest.o : $(TEST_DIR)/base_unit_unittest.cpp \
                      $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/base_unit_unittest.cpp
 
+sub_unit_unittest.o : $(TEST_DIR)/sub_unit_unittest.cpp \
+                     $(UNIT_DIR)/base_unit.h \
+                     $(UNIT_DIR)/greaser_unit.h \
+                     $(MODELS_DIR)/constants.h \
+                     $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/sub_unit_unittest.cpp
+
 map_unittest.o : $(TEST_DIR)/map_unittest.cpp \
                      $(MODELS_DIR)/map.h \
                      $(MODELS_DIR)/constants.h \
@@ -137,7 +154,7 @@ constants_unittest.o : $(TEST_DIR)/constants_unittest.cpp \
                      $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/constants_unittest.cpp
 
-OBJS = base_unit.o base_tile.o constants.o map.o sub_tile.o
+OBJS = base_unit.o base_tile.o constants.o map.o sub_tile.o utils.o greaser_unit.o
 
 base_unit_unittest : $(OBJS) base_unit_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
@@ -146,6 +163,9 @@ base_tile_unittest : $(OBJS) base_tile_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
 sub_tile_unittest : $(OBJS) sub_tile_unittest.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+sub_unit_unittest : $(OBJS) sub_unit_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
 constants_unittest : $(OBJS) constants_unittest.o gtest_main.a
