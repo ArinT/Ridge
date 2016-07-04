@@ -29,7 +29,12 @@ CXXFLAGS += -std=c++11 -g -Wall -Wextra -pthread
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = base_tile_unittest base_unit_unittest constants_unittest map_unittest sub_tile_unittest sub_unit_unittest
+TESTS = $(BUILD_DIR)/base_tile_unittest \
+        $(BUILD_DIR)/base_unit_unittest \
+        $(BUILD_DIR)/constants_unittest \
+        $(BUILD_DIR)/map_unittest \
+        $(BUILD_DIR)/sub_tile_unittest \
+        $(BUILD_DIR)/sub_unit_unittest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -181,21 +186,21 @@ OBJS = $(BUILD_DIR)/base_unit.o \
        $(BUILD_DIR)/squabbler_unit.o \
        $(BUILD_DIR)/bruiser_unit.o 
 
-base_unit_unittest : $(OBJS) $(BUILD_DIR)/base_unit_unittest.o $(BUILD_DIR)/gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $(BUILD_DIR)/$@
+$(BUILD_DIR)/base_unit_unittest : $(OBJS) $(BUILD_DIR)/base_unit_unittest.o $(BUILD_DIR)/gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
-base_tile_unittest : $(OBJS) $(BUILD_DIR)/base_tile_unittest.o $(BUILD_DIR)/gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $(BUILD_DIR)/$@
+$(BUILD_DIR)/base_tile_unittest : $(OBJS) $(BUILD_DIR)/base_tile_unittest.o $(BUILD_DIR)/gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
-sub_tile_unittest : $(OBJS) $(BUILD_DIR)/sub_tile_unittest.o $(BUILD_DIR)/gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $(BUILD_DIR)/$@
+$(BUILD_DIR)/sub_tile_unittest : $(OBJS) $(BUILD_DIR)/sub_tile_unittest.o $(BUILD_DIR)/gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
-sub_unit_unittest : $(OBJS) $(BUILD_DIR)/sub_unit_unittest.o $(BUILD_DIR)/gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $(BUILD_DIR)/$@
+$(BUILD_DIR)/sub_unit_unittest : $(OBJS) $(BUILD_DIR)/sub_unit_unittest.o $(BUILD_DIR)/gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
-constants_unittest : $(OBJS) $(BUILD_DIR)/constants_unittest.o $(BUILD_DIR)/gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $(BUILD_DIR)/$@
+$(BUILD_DIR)/constants_unittest : $(OBJS) $(BUILD_DIR)/constants_unittest.o $(BUILD_DIR)/gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
-map_unittest : $(OBJS) $(BUILD_DIR)/map_unittest.o $(BUILD_DIR)/gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $(BUILD_DIR)/$@
+$(BUILD_DIR)/map_unittest : $(OBJS) $(BUILD_DIR)/map_unittest.o $(BUILD_DIR)/gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 

@@ -1,13 +1,17 @@
 #include <vector>
 #include <list>
+#include <string>
+#include <fstream>
 
 #include "constants.h"
 #include "map.h"
 #include "base_tile.h"
 #include "base_unit.h"
+#include "sub_tile.h"
 
 using std::vector;
 using std::list;
+using std::string;
 
 Map::Map(int col, int row) {
     columns = col;
@@ -53,21 +57,21 @@ bool Map::remove_unit(Unit* unit) {
 
 void Map::destroy_tile_matrix() {
     for (int i = 0; i < int(tile_matrix.size()) ; i++) {
-        vector<Tile*> i_row = tile_matrix[i];
-        for ( int j = 0; j < int(i_row.size()); j++ ) {
-            delete i_row[j];
+        vector<Tile*> i_column = tile_matrix[i];
+        for ( int j = 0; j < int(i_column.size()); j++ ) {
+            delete i_column[j];
         }
     }
 }
 
 void Map::initialize_tile_matrix() {
-    for (int i = 0; i < rows; i++) {
-        vector<Tile*> new_row = {};
-        for (int j = 0; j < columns; j++) {
+    for (int i = 0; i < columns; i++) {
+        vector<Tile*> new_column = {};
+        for (int j = 0; j < rows; j++) {
             Tile* t = NULL;
-            new_row.push_back(t);    
+            new_column.push_back(t);    
         }
-        tile_matrix.push_back(new_row); 
+        tile_matrix.push_back(new_column); 
     }
 }
 
@@ -102,4 +106,71 @@ bool Map::can_go_through(int x, int y, Constants::Team team) {
         !out_of_bounds(x, y) && 
         is_accessible(x, y) &&
         !is_enemy_occupied(x, y, team));
+}
+
+void Map::generate_from_ascii(string filename) {
+    string line;
+    std::ifstream infile(filename);
+    for (int i = 0; i < columns; i++) {
+        std::getline(infile, line);
+        for (int j = 0; j < rows; j++) {
+            lay_tile(line[i], i, j);
+        }
+    }
+    infile.close();
+}
+
+Tile* Map::get_tile(int x, int y) {
+    return tile_matrix[x][y];
+}
+
+void Map::lay_tile(char c, int x, int y) {
+    switch (c) {
+        case 'R':
+            tile_matrix[x][y] = new RoadTile(x, y, 0); break;
+        case 'T':
+            tile_matrix[x][y] = new RoadTile(x, y, 1); break;
+        case 'C':
+            tile_matrix[x][y] = new ConcreteTile(x, y); break;
+        case 'G':
+            tile_matrix[x][y] = new GrassTile(x, y); break;
+        case 'W':
+            tile_matrix[x][y] = new WallTile(x, y, 0); break;
+        case 'S':
+            tile_matrix[x][y] = new SceneryTile(x, y); break;
+        case '1':
+            tile_matrix[x][y] = new WallTile(x ,y, 1); break;
+        case '2':
+            tile_matrix[x][y] = new WallTile(x, y, 2); break;
+        case '3':
+            tile_matrix[x][y] = new WallTile(x, y, 3); break;
+        case '4':
+            tile_matrix[x][y] = new WallTile(x, y, 4); break;
+        case 'V':
+            tile_matrix[x][y] = new WallTile(x, y, 5); break;
+        case 'D':
+            tile_matrix[x][y] = new WallTile(x, y, 6); break;
+        case 'F':
+            tile_matrix[x][y] = new WallTile(x, y, 7); break;
+        case 'A':
+            tile_matrix[x][y] = new SpecialTile(x, y, 0); break;
+        case 'Y':
+            tile_matrix[x][y] = new SpecialTile(x, y, 1); break;
+        case 'U':
+            tile_matrix[x][y] = new SpecialTile(x, y, 2); break;
+        case 'I':
+            tile_matrix[x][y] = new SpecialTile(x, y, 3); break;
+        case 'O':
+            tile_matrix[x][y] = new SpecialTile(x, y, 4); break;
+        case 'P':
+            tile_matrix[x][y] = new SpecialTile(x, y, 5); break;
+        case 'L':
+            tile_matrix[x][y] = new SpecialTile(x, y, 6); break;
+        case 'K':
+            tile_matrix[x][y] = new SpecialTile(x, y, 7); break;
+        case 'J':
+            tile_matrix[x][y] = new SpecialTile(x, y, 8); break;
+        default:
+            tile_matrix[x][y] = new WallTile(x, y, 0); break;
+    }
 }

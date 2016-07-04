@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <list>
+#include <string>
 
 #include "base_unit.h"
 #include "base_tile.h"
@@ -14,6 +15,7 @@
 
 using std::vector;
 using std::list;
+using std::string;
 
 class Map {
     TEST_MAP_FRIENDS;
@@ -25,10 +27,9 @@ class Map {
         Constants::Team current_turn;
         void initialize_tile_matrix();
         void destroy_unit_list();
-        void destroy_tile_matrix(); 
+        void destroy_tile_matrix();
     public:
         Tile* get_tile(int x, int y);
-        Unit* get_unit(int x, int y);
         bool add_unit(Unit* unit);
         bool remove_unit(Unit* unit);
         Unit* unit_at(int x, int y);
@@ -38,9 +39,13 @@ class Map {
         bool can_go_to(int x, int y);
         bool can_go_through(int x, int y, Constants::Team team);
         bool out_of_bounds(int x, int y);
+        void lay_tile(char c, int x, int y);
+        void generate_from_ascii(string filename);
         Map(int col, int row);
         ~Map();
         Constants::Team get_turn() { return current_turn; };
+        int get_columns() { return columns; }
+        int get_rows() { return rows; }
 };
 
 #endif
