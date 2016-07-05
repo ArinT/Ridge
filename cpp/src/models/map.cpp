@@ -112,10 +112,10 @@ bool Map::can_go_through(int x, int y, Constants::Team team) {
 void Map::generate_from_ascii(string filename) {
     string line;
     std::ifstream infile(filename);
-    for (int i = 0; i < columns; i++) {
+    for (int i = 0; i < rows; i++) {
         std::getline(infile, line);
-        for (int j = 0; j < rows; j++) {
-            lay_tile(line[i], i, j);
+        for (int j = 0; j < columns; j++) {
+            lay_tile(line[j], j, i);
         }
     }
     infile.close();

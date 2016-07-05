@@ -36,10 +36,13 @@ TEST_F(MapTest, GenerateFromAscii) {
     map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
     Tile* t = map->get_tile(0, 0);
     EXPECT_EQ(t->get_img_path(), "pixel_art/rd.png"); 
-    Tile* s = map->get_tile(15, 2);
+    Tile* s = map->get_tile(2, 15);
     EXPECT_EQ(s->get_img_path(), "pixel_art/gs.png");
+    Tile* r = map->get_tile(15, 2);
+    EXPECT_EQ(r->get_img_path(), "pixel_art/rd.png"); 
     s = NULL;
     t = NULL;
+    r = NULL;
 }
 
 TEST_F(MapTest, AddUnitSuccess) {
