@@ -16,7 +16,6 @@ Tile::Tile(
     y(y)
 {
     unit = NULL;
-    occupied = false;
     attack_marked = false;
     marked = false; 
 }
@@ -25,12 +24,13 @@ Tile::~Tile() {
 }
 bool Tile::remove_unit() {
     unit = NULL;
-    occupied = false;
     return true;
 }
 
 bool Tile::add_unit(Unit *unit) {
     this->unit = unit;
-    occupied = true;
     return true;
+}
+bool Tile::is_occupied() {
+    return unit != NULL;
 }

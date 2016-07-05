@@ -21,7 +21,7 @@ class Tile {
         int get_y() { return y; }
         std::string get_img_path() { return img_path; }
         bool is_accessible() { return accessible; }
-        bool is_occupied() { return occupied; }
+        bool is_occupied(); 
         bool is_marked() { return marked; }
         bool is_attack_marked() { return attack_marked; }
         Unit* get_unit() { return unit; } 
@@ -34,6 +34,5 @@ class Tile {
         Unit *unit;
         bool marked;
         bool attack_marked;
-        bool occupied;
 };
 #endif
