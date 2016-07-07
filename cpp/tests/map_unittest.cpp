@@ -1,10 +1,13 @@
 #include "gtest/gtest.h"
 #include <string>
+#include <vector>
+#include <set>
 
 #define TEST_MAP_FRIENDS \
     friend class MapTest_BasicConstructor_Test;
 
 #include "map.h"
+#include "sub_tile.h"
 #include "greaser_unit.h"
 #include "constants.h"
 
@@ -18,6 +21,7 @@ class MapTest : public testing::Test {
         }
         Map* map;
 };
+class NodeTest : public testing::Test {};
 
 TEST_F(MapTest, BasicConstructor) {
     EXPECT_EQ(32, map->tile_matrix.size());
@@ -136,4 +140,40 @@ TEST_F(MapTest, CanGoThroughNegative) {
     Unit* g = new GreaserUnit(1, 1, Constants::Team::Jets);
     map->add_unit(g);
     EXPECT_FALSE(map->can_go_through(1, 1, Constants::Team::Sharks));
+}
+
+TEST_F(NodeTest, Basic) {
+    Tile* t1 = new ConcreteTile(1, 1);
+    Node* n1 = new Node(t1, NULL, 1);
+    std::vector<Tile*> path = n1->retrace_path();
+    EXPECT_EQ(path[0], t1);
+    delete n1;
+    delete t1;
+}
+
+TEST_F(NodeTest, Advanced) {
+    Tile* t1 = new ConcreteTile(1, 1);
+    Tile* t2 = new ConcreteTile(1, 1);
+    Tile* t3 = new ConcreteTile(1, 1);
+    Node* n1 = new Node(t1, NULL, 1);
+    Node* n2 = new Node(t2, n1, 1);
+    Node* n3 = new Node(t3, n2, 1);
+    std::vector<Tile*> path = n3->retrace_path();
+    EXPECT_EQ(path[0], t1);
+    EXPECT_EQ(path[1], t2);
+    EXPECT_EQ(path[2], t3);
+    delete n3;
+    delete t1; delete t2; delete t3;
+}
+
+TEST_F(MapTest, GetMin) {
+    Node* n1 = new Node(NULL, NULL, 3);
+    Node* n2 = new Node(NULL, n1, 1);
+    Node* n3 = new Node(NULL, n2, 2);
+    std::set<Node*> s;
+    s.insert(n1);
+    s.insert(n2);
+    s.insert(n3);
+    EXPECT_EQ(Node::get_min(s), n2);
+    delete n1; delete n2; delete n3;
 }

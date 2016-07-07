@@ -91,6 +91,7 @@ class Constants {
         static const int bruiser_movement;
         static const int squabbler_movement;
         static const int greaser_movement;
+        static const int max_movement;
         enum class ActionType {
             Select,
             Move,

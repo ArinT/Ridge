@@ -14,6 +14,7 @@ class Tile {
             int y
         );
         ~Tile();
+        int manhattan_distance(Tile* dest);
         bool remove_unit();
         bool add_unit(Unit *unit);
         int get_defense() { return defense; } 

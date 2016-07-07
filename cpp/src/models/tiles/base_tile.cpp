@@ -19,9 +19,11 @@ Tile::Tile(
     attack_marked = false;
     marked = false; 
 }
+
 Tile::~Tile() {
     unit = NULL;
 }
+
 bool Tile::remove_unit() {
     unit = NULL;
     return true;
@@ -31,6 +33,11 @@ bool Tile::add_unit(Unit *unit) {
     this->unit = unit;
     return true;
 }
+
 bool Tile::is_occupied() {
     return unit != NULL;
+}
+
+int Tile::manhattan_distance(Tile* dest) {
+    return abs(this->get_x() - dest->get_x()) + abs(this->get_y() - dest->get_y());
 }

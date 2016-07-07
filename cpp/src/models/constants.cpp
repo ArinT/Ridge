@@ -4,7 +4,8 @@
 
 const int Constants::bruiser_movement        = 4; 
 const int Constants::greaser_movement        = 6; 
-const int Constants::squabbler_movement      = 5; 
+const int Constants::squabbler_movement      = 5;
+const int Constants::max_movement            = 6;
 const int Constants::bruiser_max_hp          = 15;
 const int Constants::bruiser_min_hp          = 12;
 const int Constants::bruiser_max_strength    = 12;

@@ -4,6 +4,7 @@
 #include <vector>
 #include <list>
 #include <string>
+#include <set>
 
 #include "base_unit.h"
 #include "base_tile.h"
@@ -16,6 +17,7 @@
 using std::vector;
 using std::list;
 using std::string;
+using std::set;
 
 class Map {
     TEST_MAP_FRIENDS;
@@ -40,12 +42,24 @@ class Map {
         bool can_go_through(int x, int y, Constants::Team team);
         bool out_of_bounds(int x, int y);
         void lay_tile(char c, int x, int y);
+        vector<Tile*> a_star(Tile* start, Tile* goal, Constants::Team team);
+        vector<Tile*> a_star(Tile* start, Tile* goal, Constants::Team team, int limit);
         void generate_from_ascii(string filename);
         Map(int col, int row);
         ~Map();
         Constants::Team get_turn() { return current_turn; };
-        int get_columns() { return columns; }
-        int get_rows() { return rows; }
+        int get_columns() { return columns; };
+        int get_rows() { return rows; };
 };
 
+class Node {
+    public:
+        Tile* tile;
+        Node* parent;
+        int score;
+        Node(Tile* tile, Node* parent, int score);
+        ~Node();
+        vector<Tile*> retrace_path(); 
+        static Node* get_min(std::set<Node*> s);
+};
 #endif

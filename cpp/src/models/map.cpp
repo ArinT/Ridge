@@ -2,16 +2,19 @@
 #include <list>
 #include <string>
 #include <fstream>
+#include <set>
 
 #include "constants.h"
 #include "map.h"
 #include "base_tile.h"
 #include "base_unit.h"
 #include "sub_tile.h"
+#include "utils.h"
 
 using std::vector;
 using std::list;
 using std::string;
+using std::set;
 
 Map::Map(int col, int row) {
     columns = col;
@@ -29,6 +32,26 @@ void Map::destroy_unit_list() {
     typedef list<Unit*>::const_iterator iterator;
     for (iterator it = unit_list.begin(), end = unit_list.end(); it != end; ++it) {
         delete *it;
+    }
+}
+
+void Map::destroy_tile_matrix() {
+    for (int i = 0; i < int(tile_matrix.size()) ; i++) {
+        vector<Tile*> i_column = tile_matrix[i];
+        for ( int j = 0; j < int(i_column.size()); j++ ) {
+            delete i_column[j];
+        }
+    }
+}
+
+void Map::initialize_tile_matrix() {
+    for (int i = 0; i < columns; i++) {
+        vector<Tile*> new_column = {};
+        for (int j = 0; j < rows; j++) {
+            Tile* t = NULL;
+            new_column.push_back(t);    
+        }
+        tile_matrix.push_back(new_column); 
     }
 }
 
@@ -54,25 +77,14 @@ bool Map::remove_unit(Unit* unit) {
     return true;
 }
 
-void Map::destroy_tile_matrix() {
-    for (int i = 0; i < int(tile_matrix.size()) ; i++) {
-        vector<Tile*> i_column = tile_matrix[i];
-        for ( int j = 0; j < int(i_column.size()); j++ ) {
-            delete i_column[j];
-        }
-    }
+Tile* Map::get_tile(int x, int y) {
+    return tile_matrix[x][y];
 }
 
-void Map::initialize_tile_matrix() {
-    for (int i = 0; i < columns; i++) {
-        vector<Tile*> new_column = {};
-        for (int j = 0; j < rows; j++) {
-            Tile* t = NULL;
-            new_column.push_back(t);    
-        }
-        tile_matrix.push_back(new_column); 
-    }
+Unit* Map::unit_at(int x, int y) {
+    return tile_matrix[x][y]->get_unit();
 }
+
 
 bool Map::is_occupied(int x, int y) {
     return tile_matrix[x][y] != NULL && tile_matrix[x][y]->is_occupied();
@@ -94,10 +106,6 @@ bool Map::can_go_to(int x, int y) {
     );
 }
 
-Unit* Map::unit_at(int x, int y) {
-    return tile_matrix[x][y]->get_unit();
-}
-
 bool Map::out_of_bounds(int x, int y) {
     return x < 0 || x >= columns || y < 0 || y >= rows; 
 }
@@ -107,6 +115,21 @@ bool Map::can_go_through(int x, int y, Constants::Team team) {
         !out_of_bounds(x, y) && 
         is_accessible(x, y) &&
         !is_enemy_occupied(x, y, team));
+}
+
+vector<Tile*> Map::a_star(Tile* start, Tile* end, Constants::Team team) {
+    return a_star(start, end, team, Constants::max_movement);
+}
+
+vector<Tile*> Map::a_star(Tile* start, Tile* end, Constants::Team team, int limit) {
+    int dist = start->manhattan_distance(end);
+    set<Node*> open_set;
+    open_set.insert(new Node(start, NULL, dist));
+    Node* min_node = NULL;
+    while (!open_set.empty()) {
+        min_node = Node::get_min(open_set);
+    }
+    return min_node->retrace_path();
 }
 
 void Map::generate_from_ascii(string filename) {
@@ -119,10 +142,6 @@ void Map::generate_from_ascii(string filename) {
         }
     }
     infile.close();
-}
-
-Tile* Map::get_tile(int x, int y) {
-    return tile_matrix[x][y];
 }
 
 void Map::lay_tile(char c, int x, int y) {
@@ -174,4 +193,36 @@ void Map::lay_tile(char c, int x, int y) {
         default:
             tile_matrix[x][y] = new WallTile(x, y, 0); break;
     }
+}
+
+Node::Node(Tile* tile, Node* parent, int score)
+    : tile(tile), parent(parent), score(score) { }
+vector<Tile*> Node::retrace_path() {
+    if (parent == NULL) {
+        vector<Tile*> path = {tile};
+        return path; 
+    }
+    vector<Tile*> path = this->parent->retrace_path();
+    path.push_back(tile);
+    return path; 
+}
+
+Node::~Node() {
+    if (parent != NULL) {
+        delete parent;
+    }
+    tile = NULL;
+    parent = NULL;
+}
+
+Node* Node::get_min(set<Node*> s) {
+    typedef set<Node*>::const_iterator iterator;
+    Node* min_node = NULL;
+    for (iterator it = s.begin(), end = s.end(); it != end; ++it) {
+        Node* current = *it;
+        if (min_node == NULL || min_node->score > current->score) {
+            min_node = current;
+        }
+    }
+    return min_node;
 }
