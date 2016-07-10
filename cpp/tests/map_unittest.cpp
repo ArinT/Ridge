@@ -260,3 +260,74 @@ TEST_F(MapTest, AStarBasicFail) {
     vector<Tile*> path = map->a_star(t1, t2, Constants::Team::Sharks);
     EXPECT_EQ(0, int(path.size()));
 }
+
+TEST_F(MapTest, AStarObstructedByWallSuccess) {
+    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    Tile* t1 = map->get_tile(10,14);
+    Tile* t2 = map->get_tile(12,11);
+    vector<Tile*> path = map->a_star(t1, t2, Constants::Team::Sharks);
+    EXPECT_EQ(8, int(path.size()));
+    EXPECT_TRUE(all_tiles_adjacent(path));
+}
+
+TEST_F(MapTest, AStarObstructedByEnemySuccess) {
+    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    Tile* t1 = map->get_tile(0,0);
+    Tile* t2 = map->get_tile(4,0);
+    GreaserUnit* g1 = new GreaserUnit(1,0, Constants::Team::Jets);
+    GreaserUnit* g2 = new GreaserUnit(1,1, Constants::Team::Jets);
+    GreaserUnit* g3 = new GreaserUnit(3,1, Constants::Team::Jets);
+    GreaserUnit* g4 = new GreaserUnit(3,2, Constants::Team::Jets);
+    map->add_unit(g1);
+    map->add_unit(g2);
+    map->add_unit(g3);
+    map->add_unit(g4);
+    vector<Tile*> path = map->a_star(t1, t2, Constants::Team::Sharks);
+    EXPECT_EQ(9, int(path.size()));
+    EXPECT_TRUE(all_tiles_adjacent(path));
+}
+
+TEST_F(MapTest, AStarObstructedByEnemyFail) {
+    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    Tile* t1 = map->get_tile(0,0);
+    Tile* t2 = map->get_tile(4,0);
+    GreaserUnit* g1 = new GreaserUnit(3,0, Constants::Team::Jets);
+    GreaserUnit* g2 = new GreaserUnit(3,1, Constants::Team::Jets);
+    GreaserUnit* g3 = new GreaserUnit(3,2, Constants::Team::Jets);
+    GreaserUnit* g4 = new GreaserUnit(2,3, Constants::Team::Jets);
+    GreaserUnit* g5 = new GreaserUnit(1,3, Constants::Team::Jets);
+    GreaserUnit* g6 = new GreaserUnit(0,3, Constants::Team::Jets);
+    map->add_unit(g1);
+    map->add_unit(g2);
+    map->add_unit(g3);
+    map->add_unit(g4);
+    map->add_unit(g5);
+    map->add_unit(g6);
+    vector<Tile*> path = map->a_star(t1, t2, Constants::Team::Sharks);
+    EXPECT_EQ(0, int(path.size()));
+}
+
+TEST_F(MapTest, AStarObstructedByWallFail) {
+    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlockDivide.txt");
+    Tile* t1 = map->get_tile(13,0);
+    Tile* t2 = map->get_tile(15,0);
+    vector<Tile*> path = map->a_star(t1, t2, Constants::Team::Sharks);
+    EXPECT_EQ(0, int(path.size()));
+}
+
+TEST_F(MapTest, AStarVeryLongSuccess) {
+    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    Tile* t1 = map->get_tile(0,0);
+    Tile* t2 = map->get_tile(31,17);
+    vector<Tile*> path = map->a_star(t1, t2, Constants::Team::Sharks, 100);
+    EXPECT_EQ(75, int(path.size()));
+    EXPECT_TRUE(all_tiles_adjacent(path));
+}
+
+TEST_F(MapTest, AStarVeryLongFail) {
+    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlockDivide.txt");
+    Tile* t1 = map->get_tile(0,0);
+    Tile* t2 = map->get_tile(31,17);
+    vector<Tile*> path = map->a_star(t1, t2, Constants::Team::Sharks, 100);
+    EXPECT_EQ(0, int(path.size()));
+}
