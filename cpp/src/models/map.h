@@ -44,6 +44,7 @@ class Map {
         void lay_tile(char c, int x, int y);
         vector<Tile*> a_star(Tile* start, Tile* goal, Constants::Team team);
         vector<Tile*> a_star(Tile* start, Tile* goal, Constants::Team team, int limit);
+        vector<Tile*> get_neighboring_tiles(Tile* tile, Constants::Team team); 
         void generate_from_ascii(string filename);
         Map(int col, int row);
         ~Map();
@@ -59,7 +60,11 @@ class Node {
         int score;
         Node(Tile* tile, Node* parent, int score);
         ~Node();
+        void destroy_path();
         vector<Tile*> retrace_path(); 
         static Node* get_min(std::set<Node*> s);
+        static void destroy_node_set(set<Node*> s);
+        static vector<Node*> make_nodes(vector<Tile*> tiles, Node* parent, Tile* goal);
+        bool tile_in_set(set<Node*> s);
 };
 #endif

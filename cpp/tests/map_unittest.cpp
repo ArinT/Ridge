@@ -19,6 +19,14 @@ class MapTest : public testing::Test {
         virtual void TearDown() {
             delete map;
         }
+        bool all_tiles_adjacent(vector<Tile*> tiles) {
+            for (int i = 1; i < int(tiles.size()); i++) {
+                if (tiles[i-1]->manhattan_distance(tiles[i]) != 1) {
+                    return false;
+                }
+            }
+            return true;
+        }
         Map* map;
 };
 class NodeTest : public testing::Test {};
@@ -162,7 +170,35 @@ TEST_F(NodeTest, Advanced) {
     EXPECT_EQ(path[0], t1);
     EXPECT_EQ(path[1], t2);
     EXPECT_EQ(path[2], t3);
-    delete n3;
+    n3->destroy_path();
+    delete t1; delete t2; delete t3;
+}
+
+TEST_F(NodeTest, TileInSetPositive) {
+    Tile* t1 = new ConcreteTile(1, 1);
+    Tile* t2 = new ConcreteTile(1, 1);
+    Node* n1 = new Node(t1, NULL, 1);
+    Node* n2 = new Node(t2, n1, 1);
+    std::set<Node*> s;
+    s.insert(n1);
+    s.insert(n2);
+    EXPECT_TRUE(n1->tile_in_set(s));
+    n2->destroy_path();
+    delete t1; delete t2;
+} 
+
+TEST_F(NodeTest, TileInSetNegative) {
+    Tile* t1 = new ConcreteTile(1, 1);
+    Tile* t2 = new ConcreteTile(1, 1);
+    Tile* t3 = new ConcreteTile(1, 1);
+    Node* n1 = new Node(t1, NULL, 1);
+    Node* n2 = new Node(t2, n1, 1);
+    Node* n3 = new Node(t3, n2, 1);
+    std::set<Node*> s;
+    s.insert(n1);
+    s.insert(n2);
+    EXPECT_FALSE(n3->tile_in_set(s));
+    n3->destroy_path();
     delete t1; delete t2; delete t3;
 }
 
@@ -175,5 +211,52 @@ TEST_F(MapTest, GetMin) {
     s.insert(n2);
     s.insert(n3);
     EXPECT_EQ(Node::get_min(s), n2);
-    delete n1; delete n2; delete n3;
+    n3->destroy_path();
+}
+
+TEST_F(MapTest, GetNeighboringTilesBasic) {
+    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    Tile* t1 = map->get_tile(2,2);
+    std::vector<Tile*> neighbors = map->get_neighboring_tiles(t1, Constants::Team::Sharks);
+    EXPECT_EQ(neighbors[0], map->get_tile(3,2));
+    EXPECT_EQ(neighbors[1], map->get_tile(1,2));
+    EXPECT_EQ(neighbors[2], map->get_tile(2,3));
+    EXPECT_EQ(neighbors[3], map->get_tile(2,1));
+}
+
+TEST_F(MapTest, GetNeighboringTilesSomeInaccessible) {
+    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    Tile* t1 = map->get_tile(12, 11);
+    std::vector<Tile*> neighbors = map->get_neighboring_tiles(t1, Constants::Team::Sharks);
+    EXPECT_EQ(neighbors[0], map->get_tile(13,11));
+    EXPECT_EQ(neighbors[1], map->get_tile(12,10));
+}
+
+TEST_F(MapTest, GetNeighboringTilesSomeBlocked) {
+    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    Tile* t1 = map->get_tile(2,2);
+    Unit* g1 = new GreaserUnit(1, 2, Constants::Team::Jets);
+    Unit* g2 = new GreaserUnit(2, 1, Constants::Team::Jets);
+    map->add_unit(g1);
+    map->add_unit(g2);
+    std::vector<Tile*> neighbors = map->get_neighboring_tiles(t1, Constants::Team::Sharks);
+    EXPECT_EQ(neighbors[0], map->get_tile(3,2));
+    EXPECT_EQ(neighbors[1], map->get_tile(2,3));
+}
+
+TEST_F(MapTest, AStarBasicSuccess) {
+    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    Tile* t1 = map->get_tile(1,2);
+    Tile* t2 = map->get_tile(5,2);
+    vector<Tile*> path = map->a_star(t1, t2, Constants::Team::Sharks);
+    EXPECT_EQ(5, int(path.size()));
+    EXPECT_TRUE(all_tiles_adjacent(path));
+}
+
+TEST_F(MapTest, AStarBasicFail) {
+    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    Tile* t1 = map->get_tile(1,2);
+    Tile* t2 = map->get_tile(16,2);
+    vector<Tile*> path = map->a_star(t1, t2, Constants::Team::Sharks);
+    EXPECT_EQ(0, int(path.size()));
 }

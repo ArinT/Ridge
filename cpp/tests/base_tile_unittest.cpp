@@ -30,3 +30,9 @@ TEST_F(BaseTileTest, AddUnit) {
     EXPECT_EQ(unit, tile->get_unit());
     delete unit;
 }
+
+TEST_F(BaseTileTest, ManhattanDistance) {
+    Tile* t2 = new Tile(3, "path/to/img", true, 5, 4);
+    EXPECT_EQ(7, tile->manhattan_distance(t2));
+    delete t2; 
+}

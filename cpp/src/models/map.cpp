@@ -4,6 +4,8 @@
 #include <fstream>
 #include <set>
 
+#include <stdio.h>
+
 #include "constants.h"
 #include "map.h"
 #include "base_tile.h"
@@ -49,7 +51,7 @@ void Map::initialize_tile_matrix() {
         vector<Tile*> new_column = {};
         for (int j = 0; j < rows; j++) {
             Tile* t = NULL;
-            new_column.push_back(t);    
+            new_column.push_back(t); 
         }
         tile_matrix.push_back(new_column); 
     }
@@ -124,12 +126,39 @@ vector<Tile*> Map::a_star(Tile* start, Tile* end, Constants::Team team) {
 vector<Tile*> Map::a_star(Tile* start, Tile* end, Constants::Team team, int limit) {
     int dist = start->manhattan_distance(end);
     set<Node*> open_set;
+    set<Node*> closed_set;
     open_set.insert(new Node(start, NULL, dist));
-    Node* min_node = NULL;
+    Node* current_node = NULL;
     while (!open_set.empty()) {
-        min_node = Node::get_min(open_set);
+        current_node = Node::get_min(open_set);
+        if (current_node->tile == end) {
+            vector<Tile*> path = current_node->retrace_path();
+            open_set.erase(open_set.find(current_node));
+            delete current_node;
+            Node::destroy_node_set(closed_set);
+            Node::destroy_node_set(open_set);
+            return path;
+        }
+        open_set.erase(open_set.find(current_node));
+        closed_set.insert(current_node);
+        vector<Tile*> neighbor_tiles = get_neighboring_tiles(current_node->tile, team);
+        vector<Node*> neighbor_nodes = Node::make_nodes(neighbor_tiles, current_node, end);
+        for (int i = 0; i < int(neighbor_nodes.size()); i++) {
+            Node* neighbor = neighbor_nodes[i];
+            if (
+                !neighbor->tile_in_set(open_set) &&
+                !neighbor->tile_in_set(closed_set) &&
+                neighbor->score <= limit
+            ) {
+                    open_set.insert(neighbor); 
+            } else {
+                delete neighbor;
+            }
+            
+        }
     }
-    return min_node->retrace_path();
+    Node::destroy_node_set(closed_set);
+    return vector<Tile*>();
 }
 
 void Map::generate_from_ascii(string filename) {
@@ -208,12 +237,17 @@ vector<Tile*> Node::retrace_path() {
 }
 
 Node::~Node() {
-    if (parent != NULL) {
-        delete parent;
-    }
     tile = NULL;
     parent = NULL;
 }
+
+void Node::destroy_path() {
+    if (parent != NULL) {
+        parent->destroy_path();
+    }
+    delete this;
+}
+
 
 Node* Node::get_min(set<Node*> s) {
     typedef set<Node*>::const_iterator iterator;
@@ -225,4 +259,49 @@ Node* Node::get_min(set<Node*> s) {
         }
     }
     return min_node;
+}
+
+vector<Node*> Node::make_nodes(vector<Tile*> tiles, Node* parent,  Tile* goal) {
+    vector<Node*> nodes = {};
+    for (int i = 0; i < int(tiles.size()); i++) {
+        nodes.push_back(new Node(tiles[i], parent, tiles[i]->manhattan_distance(goal)));
+    }
+    return nodes;
+}
+
+bool Node::tile_in_set(set<Node*> s) {
+    for (set<Node*>::const_iterator it=s.begin(); it!=s.end(); ++it) {
+        if (this->tile == (*it)->tile) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void Node::destroy_node_set(set<Node*> s) {
+    for (set<Node*>::const_iterator it=s.begin(); it!=s.end(); ++it) {
+        Node* n = *it;
+        delete n;
+    }
+}
+
+
+vector<Tile*> Map::get_neighboring_tiles(Tile* tile, Constants::Team team) {
+    vector<Tile*> neighbors = {};
+    int x = tile->get_x();
+    int y = tile->get_y();
+    
+    if (can_go_through(x + 1, y, team)) {
+        neighbors.push_back(get_tile(x + 1, y));
+    }
+    if (can_go_through(x - 1, y, team)) {
+        neighbors.push_back(get_tile(x - 1, y));
+    }
+    if (can_go_through(x, y + 1, team)) {
+        neighbors.push_back(get_tile(x, y + 1));
+    }
+    if (can_go_through(x, y - 1, team)) {
+        neighbors.push_back(get_tile(x, y - 1));
+    }
+    return neighbors;
 }
