@@ -52,6 +52,7 @@ all : $(PROGRAM) $(TESTS)
 
 clean :
 	rm build/*
+	rm Ridge
 
 # Builds gtest.a and gtest_main.a.
 
@@ -90,6 +91,7 @@ UNIT_DIR = $(BASE_DIR)/src/models/units
 TEST_DIR = $(BASE_DIR)/tests
 
 CPPFLAGS += -I$(MODELS_DIR)
+CPPFLAGS += -I$(BUILD_DIR)
 CPPFLAGS += -I$(TILE_DIR)
 CPPFLAGS += -I$(UNIT_DIR)
 CPPFLAGS += -I$(TEST_DIR)
