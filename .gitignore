@@ -4,6 +4,7 @@ python/Final2ManualTestPlan.txt
 python/env
 python/activate
 cpp/build/*
+cpp/Ridge
 *.pyc
 *.o
 *.a

@@ -17,7 +17,7 @@
 GTEST_DIR = /home/arin/Desktop/googletest/ridge/googletest
 
 # Where to find user code.
-USER_DIR = /home/arin/Desktop/Ridge/cpp
+BASE_DIR = /home/arin/Desktop/Ridge/cpp
 
 # Flags passed to the preprocessor.
 # Set Google Test's header directory as a system directory, such that
@@ -26,6 +26,8 @@ CPPFLAGS += -isystem $(GTEST_DIR)/include
 
 # Flags passed to the C++ compiler.
 CXXFLAGS += -std=c++11 -g -Wall -Wextra -pthread
+
+SDL_LINKER_FLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
@@ -36,15 +38,17 @@ TESTS = $(BUILD_DIR)/base_tile_unittest \
         $(BUILD_DIR)/sub_tile_unittest \
         $(BUILD_DIR)/sub_unit_unittest
 
+PROGRAM = Ridge
+
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
                 $(GTEST_DIR)/include/gtest/internal/*.h
 
-BUILD_DIR = $(USER_DIR)/build
+BUILD_DIR = $(BASE_DIR)/build
 # House-keeping build targets.
 
-all : $(TESTS)
+all : $(PROGRAM) $(TESTS)
 
 clean :
 	rm build/*
@@ -78,15 +82,27 @@ $(BUILD_DIR)/gtest_main.a : $(BUILD_DIR)/gtest-all.o $(BUILD_DIR)/gtest_main.o
 # Builds a sample test.  A test should link with either gtest.a or
 # gtest_main.a, depending on whether it defines its own main()
 # function.
-MODELS_DIR = $(USER_DIR)/src/models
-TILE_DIR = $(USER_DIR)/src/models/tiles
-UNIT_DIR = $(USER_DIR)/src/models/units
-TEST_DIR = $(USER_DIR)/tests
+SRC_DIR = $(BASE_DIR)/src
+MODELS_DIR = $(BASE_DIR)/src/models
+VIEW_DIR = $(BASE_DIR)/src/view
+TILE_DIR = $(BASE_DIR)/src/models/tiles
+UNIT_DIR = $(BASE_DIR)/src/models/units
+TEST_DIR = $(BASE_DIR)/tests
 
 CPPFLAGS += -I$(MODELS_DIR)
 CPPFLAGS += -I$(TILE_DIR)
 CPPFLAGS += -I$(UNIT_DIR)
 CPPFLAGS += -I$(TEST_DIR)
+CPPFLAGS += -I$(VIEW_DIR)
+CPPFLAGS += -I$(SRC_DIR)
+
+# View
+
+$(BUILD_DIR)/sdl.o : $(VIEW_DIR)/sdl.h \
+                     $(VIEW_DIR)/sdl.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SDL_LINKER_FLAGS) -c $(VIEW_DIR)/sdl.cpp -o $(BUILD_DIR)/sdl.o
+
+# Models
 
 $(BUILD_DIR)/utils.o : $(MODELS_DIR)/utils.h \
           $(MODELS_DIR)/utils.cpp
@@ -139,6 +155,8 @@ $(BUILD_DIR)/map.o : $(MODELS_DIR)/map.h \
         $(BUILD_DIR)/base_unit.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(MODELS_DIR)/map.cpp -o $(BUILD_DIR)/map.o
 
+# Testing
+
 $(BUILD_DIR)/base_tile_unittest.o : $(TEST_DIR)/base_tile_unittest.cpp \
                        $(BUILD_DIR)/base_tile.o \
                        $(BUILD_DIR)/constants.o \
@@ -176,6 +194,12 @@ $(BUILD_DIR)/constants_unittest.o : $(TEST_DIR)/constants_unittest.cpp \
                        $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/constants_unittest.cpp -o $(BUILD_DIR)/constants_unittest.o
 
+
+# Main
+
+$(BUILD_DIR)/ridge.o : $(VIEW_DIR)/sdl.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)/ridge.cpp -o $(BUILD_DIR)/ridge.o
+
 OBJS = $(BUILD_DIR)/base_unit.o \
        $(BUILD_DIR)/base_tile.o \
        $(BUILD_DIR)/constants.o \
@@ -184,23 +208,26 @@ OBJS = $(BUILD_DIR)/base_unit.o \
        $(BUILD_DIR)/utils.o \
        $(BUILD_DIR)/greaser_unit.o \
        $(BUILD_DIR)/squabbler_unit.o \
-       $(BUILD_DIR)/bruiser_unit.o 
+       $(BUILD_DIR)/bruiser_unit.o \
+       $(BUILD_DIR)/sdl.o 
 
 $(BUILD_DIR)/base_unit_unittest : $(OBJS) $(BUILD_DIR)/base_unit_unittest.o $(BUILD_DIR)/gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ $(SDL_LINKER_FLAGS) -o $@
 
 $(BUILD_DIR)/base_tile_unittest : $(OBJS) $(BUILD_DIR)/base_tile_unittest.o $(BUILD_DIR)/gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ $(SDL_LINKER_FLAGS) -o $@
 
 $(BUILD_DIR)/sub_tile_unittest : $(OBJS) $(BUILD_DIR)/sub_tile_unittest.o $(BUILD_DIR)/gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ $(SDL_LINKER_FLAGS) -o $@
 
 $(BUILD_DIR)/sub_unit_unittest : $(OBJS) $(BUILD_DIR)/sub_unit_unittest.o $(BUILD_DIR)/gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ $(SDL_LINKER_FLAGS) -o $@
 
 $(BUILD_DIR)/constants_unittest : $(OBJS) $(BUILD_DIR)/constants_unittest.o $(BUILD_DIR)/gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ $(SDL_LINKER_FLAGS) -o $@
 
 $(BUILD_DIR)/map_unittest : $(OBJS) $(BUILD_DIR)/map_unittest.o $(BUILD_DIR)/gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ $(SDL_LINKER_FLAGS) -o $@
 
+Ridge : $(OBJS) $(BUILD_DIR)/ridge.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ $(SDL_LINKER_FLAGS) -o $@
