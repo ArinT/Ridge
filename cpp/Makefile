@@ -100,8 +100,13 @@ CPPFLAGS += -I$(SRC_DIR)
 
 # View
 
+$(BUILD_DIR)/window.o : $(VIEW_DIR)/window.h \
+                        $(VIEW_DIR)/window.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SDL_LINKER_FLAGS) -c $(VIEW_DIR)/window.cpp -o $(BUILD_DIR)/window.o
+
 $(BUILD_DIR)/sdl.o : $(VIEW_DIR)/sdl.h \
-                     $(VIEW_DIR)/sdl.cpp
+                     $(VIEW_DIR)/sdl.cpp \
+                     $(BUILD_DIR)/window.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SDL_LINKER_FLAGS) -c $(VIEW_DIR)/sdl.cpp -o $(BUILD_DIR)/sdl.o
 
 # Models
@@ -211,7 +216,8 @@ OBJS = $(BUILD_DIR)/base_unit.o \
        $(BUILD_DIR)/greaser_unit.o \
        $(BUILD_DIR)/squabbler_unit.o \
        $(BUILD_DIR)/bruiser_unit.o \
-       $(BUILD_DIR)/sdl.o 
+       $(BUILD_DIR)/sdl.o \
+       $(BUILD_DIR)/window.o 
 
 $(BUILD_DIR)/base_unit_unittest : $(OBJS) $(BUILD_DIR)/base_unit_unittest.o $(BUILD_DIR)/gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ $(SDL_LINKER_FLAGS) -o $@

@@ -5,8 +5,8 @@
 
 #include "sdl.h"
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 1920;
+const int SCREEN_HEIGHT = 1080;
 
 int main(int argc, char **argv) {
     try {
@@ -22,9 +22,11 @@ int main(int argc, char **argv) {
                 if( e.type == SDL_QUIT ) {
                     exit = true;
                 }
+                sdl->main_window->handle_event(&e);
+
             }
-            SDL_SetRenderTarget(sdl->main_renderer, NULL);
-            SDL_RenderPresent(sdl->main_renderer);
+            SDL_SetRenderTarget(sdl->get_renderer(), NULL);
+            SDL_RenderPresent(sdl->get_renderer());
         }
         delete sdl;
     

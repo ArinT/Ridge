@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <exception>
 #include <string>
+#include "window.h"
 
 class InitError: public std::exception {
     public:
@@ -18,8 +19,8 @@ class SDLWrapper {
     public:
         SDLWrapper(const int width, const int height, Uint32 flags = 0) throw(InitError);
         virtual ~SDLWrapper();
-        SDL_Window* main_window;
-        SDL_Renderer* main_renderer;
+        Window* main_window;
+        SDL_Renderer * get_renderer();
     private:
         int window_width;
         int window_height;
