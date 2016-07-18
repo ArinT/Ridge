@@ -117,6 +117,11 @@ $(BUILD_DIR)/sdl.o : $(VIEW_DIR)/sdl.h \
                      $(BUILD_DIR)/window.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SDL_LINKER_FLAGS) -c $(VIEW_DIR)/sdl.cpp -o $(BUILD_DIR)/sdl.o
 
+$(BUILD_DIR)/game_model_view.o : $(SRC_DIR)/game_model_view.h \
+                     $(SRC_DIR)/game_model_view.cpp \
+                     $(BUILD_DIR)/game_state.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SDL_LINKER_FLAGS) -c $(SRC_DIR)/game_model_view.cpp -o $(BUILD_DIR)/game_model_view.o
+
 # Models
 
 $(BUILD_DIR)/utils.o : $(MODELS_DIR)/utils.h \
@@ -170,6 +175,14 @@ $(BUILD_DIR)/map.o : $(MODELS_DIR)/map.h \
         $(BUILD_DIR)/base_unit.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(MODELS_DIR)/map.cpp -o $(BUILD_DIR)/map.o
 
+$(BUILD_DIR)/game_state.o : $(MODELS_DIR)/game_state.h \
+        $(MODELS_DIR)/game_state.cpp \
+        $(BUILD_DIR)/map.o \
+        $(BUILD_DIR)/constants.o \
+        $(BUILD_DIR)/base_tile.o \
+        $(BUILD_DIR)/base_unit.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(MODELS_DIR)/game_state.cpp -o $(BUILD_DIR)/game_state.o
+
 # Testing
 
 $(BUILD_DIR)/base_tile_unittest.o : $(TEST_DIR)/base_tile_unittest.cpp \
@@ -214,7 +227,7 @@ $(BUILD_DIR)/constants_unittest.o : $(TEST_DIR)/constants_unittest.cpp \
 
 $(BUILD_DIR)/ridge.o : $(SRC_DIR)/ridge.cpp \
                        $(BUILD_DIR)/sdl.o \
-                       $(BUILD_DIR)/base_texture.o
+                       $(BUILD_DIR)/game_model_view.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)/ridge.cpp -o $(BUILD_DIR)/ridge.o
 
 OBJS = $(BUILD_DIR)/base_unit.o \
@@ -226,9 +239,11 @@ OBJS = $(BUILD_DIR)/base_unit.o \
        $(BUILD_DIR)/greaser_unit.o \
        $(BUILD_DIR)/squabbler_unit.o \
        $(BUILD_DIR)/bruiser_unit.o \
+       $(BUILD_DIR)/game_state.o \
        $(BUILD_DIR)/init_error.o \
        $(BUILD_DIR)/sdl.o \
        $(BUILD_DIR)/window.o \
+       $(BUILD_DIR)/game_model_view.o \
        $(BUILD_DIR)/base_texture.o
 
 $(BUILD_DIR)/base_unit_unittest : $(OBJS) $(BUILD_DIR)/base_unit_unittest.o $(BUILD_DIR)/gtest_main.a

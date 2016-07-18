@@ -1,6 +1,6 @@
 #ifndef RIDGE_VIEW_TEXTURE_MANAGER_H
 #define RIDGE_VIEW_TEXTURE_MANAGER_H
-#include <SDL2/SDL2.h>
+#include <SDL2/SDL.h>
 #include <map>
 #include <string>
 
@@ -17,5 +17,5 @@ class TextureManager {
     private:
         map<string, BaseTexture*> texture_map;
         SDL_Renderer* renderer;
-}
+};
 #endif

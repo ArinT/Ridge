@@ -1,6 +1,6 @@
 #include <map>
 #include <string>
-#include <SDL2/SDL2.h>
+#include <SDL2/SDL.h>
 #include <stdexcept>
 
 #include "texture_manager.h"
