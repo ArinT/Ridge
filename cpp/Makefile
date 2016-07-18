@@ -100,6 +100,14 @@ CPPFLAGS += -I$(SRC_DIR)
 
 # View
 
+$(BUILD_DIR)/base_texture.o : $(VIEW_DIR)/base_texture.h \
+                              $(VIEW_DIR)/base_texture.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SDL_LINKER_FLAGS) -c $(VIEW_DIR)/base_texture.cpp -o $(BUILD_DIR)/base_texture.o
+
+$(BUILD_DIR)/init_error.o : $(VIEW_DIR)/init_error.h \
+                              $(VIEW_DIR)/init_error.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SDL_LINKER_FLAGS) -c $(VIEW_DIR)/init_error.cpp -o $(BUILD_DIR)/init_error.o
+
 $(BUILD_DIR)/window.o : $(VIEW_DIR)/window.h \
                         $(VIEW_DIR)/window.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SDL_LINKER_FLAGS) -c $(VIEW_DIR)/window.cpp -o $(BUILD_DIR)/window.o
@@ -204,7 +212,9 @@ $(BUILD_DIR)/constants_unittest.o : $(TEST_DIR)/constants_unittest.cpp \
 
 # Main
 
-$(BUILD_DIR)/ridge.o : $(VIEW_DIR)/sdl.o
+$(BUILD_DIR)/ridge.o : $(SRC_DIR)/ridge.cpp \
+                       $(BUILD_DIR)/sdl.o \
+                       $(BUILD_DIR)/base_texture.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)/ridge.cpp -o $(BUILD_DIR)/ridge.o
 
 OBJS = $(BUILD_DIR)/base_unit.o \
@@ -216,8 +226,10 @@ OBJS = $(BUILD_DIR)/base_unit.o \
        $(BUILD_DIR)/greaser_unit.o \
        $(BUILD_DIR)/squabbler_unit.o \
        $(BUILD_DIR)/bruiser_unit.o \
+       $(BUILD_DIR)/init_error.o \
        $(BUILD_DIR)/sdl.o \
-       $(BUILD_DIR)/window.o 
+       $(BUILD_DIR)/window.o \
+       $(BUILD_DIR)/base_texture.o
 
 $(BUILD_DIR)/base_unit_unittest : $(OBJS) $(BUILD_DIR)/base_unit_unittest.o $(BUILD_DIR)/gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ $(SDL_LINKER_FLAGS) -o $@

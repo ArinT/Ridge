@@ -5,6 +5,8 @@
 #include "window.h"
 #include "sdl.h"
 
+#include "init_error.h"
+
 SDL_Renderer* SDLWrapper::get_renderer() {
     return main_window->renderer;
 }
@@ -30,12 +32,4 @@ SDLWrapper::~SDLWrapper() {
     SDL_Quit();
 }
 
-InitError::InitError():
-  exception(), msg(SDL_GetError()) {}
-InitError::InitError(const std::string& m):
-  exception(), msg(m) {}
-InitError::~InitError() throw() {}
-const char* InitError::what() const throw() {
-    return msg.c_str();
-}
 
