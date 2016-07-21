@@ -3,6 +3,8 @@
 #include "map.h"
 class GameState {
     public:
+        GameState();
+        ~GameState();
         Map* get_map() { return map; };
     private:
         Map* map; 

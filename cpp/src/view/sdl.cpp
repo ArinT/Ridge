@@ -32,4 +32,11 @@ SDLWrapper::~SDLWrapper() {
     SDL_Quit();
 }
 
+void SDLWrapper::update_view() {
+    SDL_SetRenderTarget(get_renderer(), NULL);
+    SDL_SetRenderDrawColor(get_renderer(), 0xFF, 0xFF, 0xFF, 0xFF );
+    SDL_RenderClear(get_renderer());
+    SDL_RenderPresent(get_renderer());
+}
+
 

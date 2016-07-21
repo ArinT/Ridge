@@ -12,6 +12,7 @@ class SDLWrapper {
         virtual ~SDLWrapper();
         Window* main_window;
         SDL_Renderer * get_renderer();
+        void update_view();
     private:
         int window_width;
         int window_height;

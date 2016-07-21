@@ -85,18 +85,35 @@ $(BUILD_DIR)/gtest_main.a : $(BUILD_DIR)/gtest-all.o $(BUILD_DIR)/gtest_main.o
 # function.
 SRC_DIR = $(BASE_DIR)/src
 MODELS_DIR = $(BASE_DIR)/src/models
+CONTROLLER_DIR = $(BASE_DIR)/src/controller
 VIEW_DIR = $(BASE_DIR)/src/view
 TILE_DIR = $(BASE_DIR)/src/models/tiles
 UNIT_DIR = $(BASE_DIR)/src/models/units
 TEST_DIR = $(BASE_DIR)/tests
 
 CPPFLAGS += -I$(MODELS_DIR)
+CPPFLAGS += -I$(CONTROLLER_DIR)
 CPPFLAGS += -I$(BUILD_DIR)
 CPPFLAGS += -I$(TILE_DIR)
 CPPFLAGS += -I$(UNIT_DIR)
 CPPFLAGS += -I$(TEST_DIR)
 CPPFLAGS += -I$(VIEW_DIR)
 CPPFLAGS += -I$(SRC_DIR)
+
+$(BUILD_DIR)/mvc.o : $(SRC_DIR)/mvc.h \
+                     $(SRC_DIR)/mvc.cpp \
+                     $(BUILD_DIR)/game_state.o \
+                     $(BUILD_DIR)/sdl.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SDL_LINKER_FLAGS) -c $(SRC_DIR)/mvc.cpp -o $(BUILD_DIR)/mvc.o
+
+# Controller 
+
+$(BUILD_DIR)/controller.o : $(CONTROLLER_DIR)/controller.h \
+                            $(CONTROLLER_DIR)/controller.cpp \
+                            $(BUILD_DIR)/sdl.o \
+                            $(BUILD_DIR)/game_state.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SDL_LINKER_FLAGS) -c $(CONTROLLER_DIR)/controller.cpp -o $(BUILD_DIR)/controller.o
+
 
 # View
 
@@ -116,11 +133,6 @@ $(BUILD_DIR)/sdl.o : $(VIEW_DIR)/sdl.h \
                      $(VIEW_DIR)/sdl.cpp \
                      $(BUILD_DIR)/window.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SDL_LINKER_FLAGS) -c $(VIEW_DIR)/sdl.cpp -o $(BUILD_DIR)/sdl.o
-
-$(BUILD_DIR)/game_model_view.o : $(SRC_DIR)/game_model_view.h \
-                     $(SRC_DIR)/game_model_view.cpp \
-                     $(BUILD_DIR)/game_state.o
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SDL_LINKER_FLAGS) -c $(SRC_DIR)/game_model_view.cpp -o $(BUILD_DIR)/game_model_view.o
 
 # Models
 
@@ -226,8 +238,7 @@ $(BUILD_DIR)/constants_unittest.o : $(TEST_DIR)/constants_unittest.cpp \
 # Main
 
 $(BUILD_DIR)/ridge.o : $(SRC_DIR)/ridge.cpp \
-                       $(BUILD_DIR)/sdl.o \
-                       $(BUILD_DIR)/game_model_view.o
+                       $(BUILD_DIR)/mvc.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)/ridge.cpp -o $(BUILD_DIR)/ridge.o
 
 OBJS = $(BUILD_DIR)/base_unit.o \
@@ -243,7 +254,8 @@ OBJS = $(BUILD_DIR)/base_unit.o \
        $(BUILD_DIR)/init_error.o \
        $(BUILD_DIR)/sdl.o \
        $(BUILD_DIR)/window.o \
-       $(BUILD_DIR)/game_model_view.o \
+       $(BUILD_DIR)/controller.o \
+       $(BUILD_DIR)/mvc.o \
        $(BUILD_DIR)/base_texture.o
 
 $(BUILD_DIR)/base_unit_unittest : $(OBJS) $(BUILD_DIR)/base_unit_unittest.o $(BUILD_DIR)/gtest_main.a
