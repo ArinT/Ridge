@@ -41,17 +41,17 @@ TEST_F(MapTest, LayTile) {
     map->lay_tile('S', 1, 3);
     Tile* t  = map->get_tile(1, 3);
     EXPECT_EQ(t->get_defense(), 0);
-    EXPECT_EQ(t->get_img_path(), "pixel_art/tcr.png");
+    EXPECT_EQ(t->get_img_path(), "data/pixel_art/tcr.png");
 }
 
 TEST_F(MapTest, GenerateFromAscii) {
     map->generate_from_ascii("data/maps/TheBlock.txt");
     Tile* t = map->get_tile(0, 0);
-    EXPECT_EQ(t->get_img_path(), "pixel_art/rd.png"); 
+    EXPECT_EQ(t->get_img_path(), "data/pixel_art/rd.png"); 
     Tile* s = map->get_tile(2, 15);
-    EXPECT_EQ(s->get_img_path(), "pixel_art/gs.png");
+    EXPECT_EQ(s->get_img_path(), "data/pixel_art/gs.png");
     Tile* r = map->get_tile(15, 2);
-    EXPECT_EQ(r->get_img_path(), "pixel_art/rd.png"); 
+    EXPECT_EQ(r->get_img_path(), "data/pixel_art/rd.png"); 
     s = NULL;
     t = NULL;
     r = NULL;

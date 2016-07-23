@@ -19,7 +19,7 @@ TEST_F(SubTileTest, BasicConstructorConcrete) {
     EXPECT_EQ(1, concrete_tile->get_defense());
     EXPECT_EQ(1, concrete_tile->get_x());
     EXPECT_EQ(1, concrete_tile->get_y());
-    EXPECT_EQ("pixel_art/cr.png", concrete_tile->get_img_path());
+    EXPECT_EQ("data/pixel_art/cr.png", concrete_tile->get_img_path());
     EXPECT_EQ(false, concrete_tile->is_occupied());  
     EXPECT_EQ(false, concrete_tile->is_marked());  
     EXPECT_EQ(false, concrete_tile->is_attack_marked());
@@ -30,7 +30,7 @@ TEST_F(SubTileTest, BasicConstructorSpecial) {
     EXPECT_EQ(0, special_tile->get_defense());
     EXPECT_EQ(1, special_tile->get_x());
     EXPECT_EQ(1, special_tile->get_y());
-    EXPECT_EQ("pixel_art/rtl.png", special_tile->get_img_path());
+    EXPECT_EQ("data/pixel_art/rtl.png", special_tile->get_img_path());
     EXPECT_EQ(false, special_tile->is_occupied());  
     EXPECT_EQ(false, special_tile->is_marked());  
     EXPECT_EQ(false, special_tile->is_attack_marked());
