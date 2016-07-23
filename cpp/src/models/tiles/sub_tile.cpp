@@ -68,7 +68,8 @@ WallTile::WallTile(int x, int y, int type) :
         y)
 { }
 
-const std::string SpecialTile::IMG_PATHS[8] = {
+const std::string SpecialTile::IMG_PATHS[9] = {
+    "data/pixel_art/rt.png",
     "data/pixel_art/rtr.png",
     "data/pixel_art/rtl.png",
     "data/pixel_art/rtd.png",

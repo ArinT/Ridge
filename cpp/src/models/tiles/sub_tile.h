@@ -45,7 +45,7 @@ class SpecialTile : public Tile {
     private:
         static const int DEFENSE;
         static const bool ACCESSIBLE;
-        static const std::string IMG_PATHS[8];
+        static const std::string IMG_PATHS[9];
     public:
         SpecialTile(int x, int y, int type); 
 };
