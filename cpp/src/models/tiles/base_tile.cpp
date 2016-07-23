@@ -3,6 +3,9 @@
 #include "base_tile.h"
 #include "base_unit.h"
 
+#include "texture_manager.h"
+#include "base_texture.h"
+
 Tile::Tile(
     int defense, 
     std::string img_path, 
@@ -17,7 +20,8 @@ Tile::Tile(
 {
     unit = NULL;
     attack_marked = false;
-    marked = false; 
+    marked = false;
+    texture = NULL;
 }
 
 Tile::~Tile() {
@@ -40,4 +44,13 @@ bool Tile::is_occupied() {
 
 int Tile::manhattan_distance(Tile* dest) {
     return abs(this->get_x() - dest->get_x()) + abs(this->get_y() - dest->get_y());
+}
+
+void Tile::draw(TextureManager* texture_manager) {
+    if (texture != NULL) {
+        texture->render(x*60, y*60);
+    } else {
+        texture = texture_manager->fetch_texture(img_path);
+        texture->render(x*60, y*60);
+    }
 }

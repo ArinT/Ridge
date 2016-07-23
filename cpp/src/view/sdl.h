@@ -13,7 +13,9 @@ class SDLWrapper {
         virtual ~SDLWrapper();
         Window* main_window;
         SDL_Renderer * get_renderer();
+        TextureManager* get_texture_manager() { return texture_manager; };
         void update_view();
+        void clear_view();
     private:
         int window_width;
         int window_height;

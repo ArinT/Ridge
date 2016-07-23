@@ -45,7 +45,7 @@ TEST_F(MapTest, LayTile) {
 }
 
 TEST_F(MapTest, GenerateFromAscii) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     Tile* t = map->get_tile(0, 0);
     EXPECT_EQ(t->get_img_path(), "pixel_art/rd.png"); 
     Tile* s = map->get_tile(2, 15);
@@ -58,14 +58,14 @@ TEST_F(MapTest, GenerateFromAscii) {
 }
 
 TEST_F(MapTest, AddUnitSuccess) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     Unit* g = new GreaserUnit(1, 1, Constants::Team::Sharks);
     map->add_unit(g);
     EXPECT_EQ(g, map->unit_at(1, 1));
 }
 
 TEST_F(MapTest, RemoveUnitSuccess) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     Unit* g = new GreaserUnit(1, 1, Constants::Team::Sharks);
     map->add_unit(g);
     EXPECT_EQ(g, map->unit_at(1, 1));
@@ -74,7 +74,7 @@ TEST_F(MapTest, RemoveUnitSuccess) {
 }
 
 TEST_F(MapTest, IsOccupiedPositive) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     Unit* g = new GreaserUnit(1, 1, Constants::Team::Sharks);
     map->add_unit(g);
     EXPECT_TRUE(map->is_occupied(1, 1));
@@ -85,19 +85,19 @@ TEST_F(MapTest, IsOccupiedNegativeNonInitializedTile) {
 }
 
 TEST_F(MapTest, IsOccupiedNegative) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     EXPECT_FALSE(map->is_occupied(1, 1));
 }
 
 TEST_F(MapTest, IsEnemyOccupiedPositive) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     Unit* g = new GreaserUnit(1, 1, Constants::Team::Sharks);
     map->add_unit(g);
     EXPECT_TRUE(map->is_enemy_occupied(1, 1, Constants::Team::Jets));
 }
 
 TEST_F(MapTest, IsEnemyOccupiedNegative) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     Unit* g = new GreaserUnit(1, 1, Constants::Team::Jets);
     map->add_unit(g);
     EXPECT_FALSE(map->is_enemy_occupied(1, 1, Constants::Team::Jets));
@@ -116,35 +116,35 @@ TEST_F(MapTest, OutOfBoundsNegative) {
 }
 
 TEST_F(MapTest, CanGoToPositive) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     EXPECT_TRUE(map->can_go_to(1, 1));
 }
 
 TEST_F(MapTest, CanGoToNegativeOutOfBounds) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     EXPECT_FALSE(map->can_go_to(1, -1));
 }
 
 TEST_F(MapTest, CanGoToNegativeOccupied) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     Unit* g = new GreaserUnit(1, 1, Constants::Team::Jets);
     map->add_unit(g);
     EXPECT_FALSE(map->can_go_to(1, 1));
 }
 
 TEST_F(MapTest, CanGoToNegativeInaccessible) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     EXPECT_FALSE(map->can_go_to(7, 7));
 }
 
 TEST_F(MapTest, CanGoThroughPositive) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     Unit* g = new GreaserUnit(1, 1, Constants::Team::Jets);
     map->add_unit(g);
     EXPECT_TRUE(map->can_go_through(1, 1, Constants::Team::Jets));
 }
 TEST_F(MapTest, CanGoThroughNegative) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     Unit* g = new GreaserUnit(1, 1, Constants::Team::Jets);
     map->add_unit(g);
     EXPECT_FALSE(map->can_go_through(1, 1, Constants::Team::Sharks));
@@ -215,7 +215,7 @@ TEST_F(MapTest, GetMin) {
 }
 
 TEST_F(MapTest, GetNeighboringTilesBasic) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     Tile* t1 = map->get_tile(2,2);
     std::vector<Tile*> neighbors = map->get_neighboring_tiles(t1, Constants::Team::Sharks);
     EXPECT_EQ(neighbors[0], map->get_tile(3,2));
@@ -225,7 +225,7 @@ TEST_F(MapTest, GetNeighboringTilesBasic) {
 }
 
 TEST_F(MapTest, GetNeighboringTilesSomeInaccessible) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     Tile* t1 = map->get_tile(12, 11);
     std::vector<Tile*> neighbors = map->get_neighboring_tiles(t1, Constants::Team::Sharks);
     EXPECT_EQ(neighbors[0], map->get_tile(13,11));
@@ -233,7 +233,7 @@ TEST_F(MapTest, GetNeighboringTilesSomeInaccessible) {
 }
 
 TEST_F(MapTest, GetNeighboringTilesSomeBlocked) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     Tile* t1 = map->get_tile(2,2);
     Unit* g1 = new GreaserUnit(1, 2, Constants::Team::Jets);
     Unit* g2 = new GreaserUnit(2, 1, Constants::Team::Jets);
@@ -245,7 +245,7 @@ TEST_F(MapTest, GetNeighboringTilesSomeBlocked) {
 }
 
 TEST_F(MapTest, AStarBasicSuccess) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     Tile* t1 = map->get_tile(1,2);
     Tile* t2 = map->get_tile(5,2);
     vector<Tile*> path = map->a_star(t1, t2, Constants::Team::Sharks);
@@ -254,7 +254,7 @@ TEST_F(MapTest, AStarBasicSuccess) {
 }
 
 TEST_F(MapTest, AStarBasicFail) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     Tile* t1 = map->get_tile(1,2);
     Tile* t2 = map->get_tile(16,2);
     vector<Tile*> path = map->a_star(t1, t2, Constants::Team::Sharks);
@@ -262,7 +262,7 @@ TEST_F(MapTest, AStarBasicFail) {
 }
 
 TEST_F(MapTest, AStarObstructedByWallSuccess) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     Tile* t1 = map->get_tile(10,14);
     Tile* t2 = map->get_tile(12,11);
     vector<Tile*> path = map->a_star(t1, t2, Constants::Team::Sharks);
@@ -271,7 +271,7 @@ TEST_F(MapTest, AStarObstructedByWallSuccess) {
 }
 
 TEST_F(MapTest, AStarObstructedByEnemySuccess) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     Tile* t1 = map->get_tile(0,0);
     Tile* t2 = map->get_tile(4,0);
     GreaserUnit* g1 = new GreaserUnit(1,0, Constants::Team::Jets);
@@ -288,7 +288,7 @@ TEST_F(MapTest, AStarObstructedByEnemySuccess) {
 }
 
 TEST_F(MapTest, AStarObstructedByEnemyFail) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     Tile* t1 = map->get_tile(0,0);
     Tile* t2 = map->get_tile(4,0);
     GreaserUnit* g1 = new GreaserUnit(3,0, Constants::Team::Jets);
@@ -308,7 +308,7 @@ TEST_F(MapTest, AStarObstructedByEnemyFail) {
 }
 
 TEST_F(MapTest, AStarObstructedByWallFail) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlockDivide.txt");
+    map->generate_from_ascii("data/maps/TheBlockDivide.txt");
     Tile* t1 = map->get_tile(13,0);
     Tile* t2 = map->get_tile(15,0);
     vector<Tile*> path = map->a_star(t1, t2, Constants::Team::Sharks);
@@ -316,7 +316,7 @@ TEST_F(MapTest, AStarObstructedByWallFail) {
 }
 
 TEST_F(MapTest, AStarVeryLongSuccess) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlock.txt");
+    map->generate_from_ascii("data/maps/TheBlock.txt");
     Tile* t1 = map->get_tile(0,0);
     Tile* t2 = map->get_tile(31,17);
     vector<Tile*> path = map->a_star(t1, t2, Constants::Team::Sharks, 100);
@@ -325,7 +325,7 @@ TEST_F(MapTest, AStarVeryLongSuccess) {
 }
 
 TEST_F(MapTest, AStarVeryLongFail) {
-    map->generate_from_ascii("/home/arin/Desktop/Ridge/cpp/data/maps/TheBlockDivide.txt");
+    map->generate_from_ascii("data/maps/TheBlockDivide.txt");
     Tile* t1 = map->get_tile(0,0);
     Tile* t2 = map->get_tile(31,17);
     vector<Tile*> path = map->a_star(t1, t2, Constants::Team::Sharks, 100);

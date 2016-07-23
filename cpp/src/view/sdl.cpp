@@ -4,8 +4,10 @@
 
 #include "window.h"
 #include "sdl.h"
+#include "texture_manager.h"
 
 #include "init_error.h"
+
 
 SDL_Renderer* SDLWrapper::get_renderer() {
     return main_window->renderer;
@@ -34,10 +36,12 @@ SDLWrapper::~SDLWrapper() {
     SDL_Quit();
 }
 
-void SDLWrapper::update_view() {
-    SDL_SetRenderTarget(get_renderer(), NULL);
+void SDLWrapper::clear_view() {
     SDL_SetRenderDrawColor(get_renderer(), 0xFF, 0xFF, 0xFF, 0xFF );
     SDL_RenderClear(get_renderer());
+}
+
+void SDLWrapper::update_view() {
     SDL_RenderPresent(get_renderer());
 }
 

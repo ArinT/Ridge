@@ -13,6 +13,8 @@
 #include "sub_tile.h"
 #include "utils.h"
 
+#include "texture_manager.h"
+
 using std::vector;
 using std::list;
 using std::string;
@@ -304,4 +306,15 @@ vector<Tile*> Map::get_neighboring_tiles(Tile* tile, Constants::Team team) {
         neighbors.push_back(get_tile(x, y - 1));
     }
     return neighbors;
+}
+
+bool Map::draw(TextureManager* texture_manager) {
+    for (int i = 0; i < int(tile_matrix.size()) ; i++) {
+        vector<Tile*> i_column = tile_matrix[i];
+        for ( int j = 0; j < int(i_column.size()); j++ ) {
+            Tile* t  = i_column[j];
+            t->draw(texture_manager);
+        }
+    }
+    return true;
 }

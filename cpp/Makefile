@@ -103,7 +103,8 @@ CPPFLAGS += -I$(SRC_DIR)
 $(BUILD_DIR)/mvc.o : $(SRC_DIR)/mvc.h \
                      $(SRC_DIR)/mvc.cpp \
                      $(BUILD_DIR)/game_state.o \
-                     $(BUILD_DIR)/sdl.o
+                     $(BUILD_DIR)/sdl.o \
+                     $(BUILD_DIR)/texture_manager.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SDL_LINKER_FLAGS) -c $(SRC_DIR)/mvc.cpp -o $(BUILD_DIR)/mvc.o
 
 # Controller 
@@ -178,7 +179,9 @@ $(BUILD_DIR)/bruiser_unit.o : $(UNIT_DIR)/bruiser_unit.h \
               
 $(BUILD_DIR)/base_tile.o : $(TILE_DIR)/base_tile.h \
               $(TILE_DIR)/base_tile.cpp \
-              $(BUILD_DIR)/base_unit.o
+              $(BUILD_DIR)/base_unit.o \
+              $(BUILD_DIR)/base_texture.o \
+              $(BUILD_DIR)/texture_manager.o 
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TILE_DIR)/base_tile.cpp -o $(BUILD_DIR)/base_tile.o
 
 $(BUILD_DIR)/sub_tile.o : $(TILE_DIR)/sub_tile.h \
@@ -190,7 +193,8 @@ $(BUILD_DIR)/map.o : $(MODELS_DIR)/map.h \
         $(MODELS_DIR)/map.cpp \
         $(BUILD_DIR)/constants.o \
         $(BUILD_DIR)/base_tile.o \
-        $(BUILD_DIR)/base_unit.o
+        $(BUILD_DIR)/base_unit.o \
+        $(BUILD_DIR)/texture_manager.o 
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(MODELS_DIR)/map.cpp -o $(BUILD_DIR)/map.o
 
 $(BUILD_DIR)/game_state.o : $(MODELS_DIR)/game_state.h \
@@ -198,7 +202,8 @@ $(BUILD_DIR)/game_state.o : $(MODELS_DIR)/game_state.h \
         $(BUILD_DIR)/map.o \
         $(BUILD_DIR)/constants.o \
         $(BUILD_DIR)/base_tile.o \
-        $(BUILD_DIR)/base_unit.o
+        $(BUILD_DIR)/base_unit.o \
+        $(BUILD_DIR)/texture_manager.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(MODELS_DIR)/game_state.cpp -o $(BUILD_DIR)/game_state.o
 
 # Testing
@@ -262,7 +267,8 @@ OBJS = $(BUILD_DIR)/base_unit.o \
        $(BUILD_DIR)/window.o \
        $(BUILD_DIR)/controller.o \
        $(BUILD_DIR)/mvc.o \
-       $(BUILD_DIR)/base_texture.o
+       $(BUILD_DIR)/base_texture.o \
+       $(BUILD_DIR)/texture_manager.o
 
 $(BUILD_DIR)/base_unit_unittest : $(OBJS) $(BUILD_DIR)/base_unit_unittest.o $(BUILD_DIR)/gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ $(SDL_LINKER_FLAGS) -o $@

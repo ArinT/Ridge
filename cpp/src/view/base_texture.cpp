@@ -1,4 +1,5 @@
 #include <string>
+#include <sstream>
 #include <SDL2/SDL.h>
 
 #include "base_texture.h"
@@ -42,13 +43,15 @@ bool BaseTexture::load(std::string path) throw(InitError){
 	SDL_Texture* newTexture = NULL;
 	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
 	if( loadedSurface == NULL ) {
-        std::string msg = "Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError(); 
-		throw InitError(msg);
+        std::stringstream msg;
+        msg << "Unable to load image " << path << "! SDL_image Error: " << IMG_GetError() <<"\n"; 
+		throw InitError(msg.str());
     }
     SDL_Surface* formattedSurface = SDL_ConvertSurfaceFormat(loadedSurface, SDL_PIXELFORMAT_RGBA8888, 0);
     if ( formattedSurface == NULL) {
-        std::string msg = "Unable to convert loaded surface to display format! %s\n", SDL_GetError();
-		throw InitError(msg);
+        std::stringstream  msg;
+        msg << "Unable to convert loaded surface to display format! " << SDL_GetError()  << "\n";
+		throw InitError(msg.str());
     }
     newTexture = SDL_CreateTexture(
         renderer,
@@ -58,8 +61,9 @@ bool BaseTexture::load(std::string path) throw(InitError){
         formattedSurface->h 
     );
     if ( newTexture == NULL) {
-        std::string msg = "Unable to create blank texture! SDL Error: %s\n", SDL_GetError();
-        throw InitError(msg);
+        std::stringstream  msg;
+        msg << "Unable to create blank texture! SDL Error: " <<  SDL_GetError() << "\n";
+        throw InitError(msg.str());
     }
     SDL_SetTextureBlendMode( newTexture, SDL_BLENDMODE_BLEND );
     SDL_LockTexture( newTexture, &formattedSurface->clip_rect, &pixels, &texture_pitch );

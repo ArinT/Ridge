@@ -10,6 +10,8 @@
 #include "base_tile.h"
 #include "constants.h"
 
+#include "texture_manager.h"
+
 #ifndef TEST_MAP_FRIENDS
 #define TEST_MAP_FRIENDS
 #endif
@@ -31,6 +33,7 @@ class Map {
         void destroy_unit_list();
         void destroy_tile_matrix();
     public:
+        bool draw(TextureManager* texture_manager);
         Tile* get_tile(int x, int y);
         bool add_unit(Unit* unit);
         bool remove_unit(Unit* unit);

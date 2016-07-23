@@ -4,6 +4,9 @@
 
 #include "base_unit.h"
 
+#include "texture_manager.h"
+#include "base_texture.h"
+
 class Tile {
     public:
         Tile(
@@ -25,8 +28,10 @@ class Tile {
         bool is_occupied(); 
         bool is_marked() { return marked; }
         bool is_attack_marked() { return attack_marked; }
+        void draw(TextureManager* texture_manager);
         Unit* get_unit() { return unit; } 
     protected:
+        BaseTexture* texture;
         int defense;
         std::string img_path;
         bool accessible;

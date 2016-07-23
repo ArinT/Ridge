@@ -24,5 +24,7 @@ bool RidgeMVC::handle_events() {
 }
 
 void RidgeMVC::update_view() {
+    sdl->clear_view();
+    game_state->draw(sdl->get_texture_manager());
     sdl->update_view();
 }
