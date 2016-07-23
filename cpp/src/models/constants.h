@@ -2,103 +2,117 @@
 #define RIDGE_MODELS_CONSTANTS_H
 #include <string>
 
-class Constants {
-    public:
-        enum class Team {
-            Sharks,
-            Jets
-        };
-        static const int bruiser_max_hp;
-        static const int bruiser_min_hp;
-        static const int bruiser_max_strength;
-        static const int bruiser_min_strength;
-        static const int bruiser_max_finesse;
-        static const int bruiser_min_finesse;
-        static const int bruiser_max_style;
-        static const int bruiser_min_style;
-        static const int bruiser_max_wit;
-        static const int bruiser_min_wit;
-        static const int greaser_max_hp;
-        static const int greaser_min_hp;
-        static const int greaser_max_strength;
-        static const int greaser_min_strength;
-        static const int greaser_max_finesse;
-        static const int greaser_min_finesse;
-        static const int greaser_max_style;
-        static const int greaser_min_style;
-        static const int greaser_max_wit;
-        static const int greaser_min_wit;
-        static const int squabbler_max_hp;
-        static const int squabbler_min_hp;
-        static const int squabbler_max_strength;
-        static const int squabbler_min_strength;
-        static const int squabbler_max_finesse;
-        static const int squabbler_min_finesse;
-        static const int squabbler_max_style;
-        static const int squabbler_min_style;
-        static const int squabbler_max_wit;
-        static const int squabbler_min_wit;
-        class UnitImagePaths {
-            public:
-                class Jets {
-                    public:
-                        static const std::string squabbler;
-                        static const std::string greaser;
-                        static const std::string bruiser;
-                }; 
-                class Sharks {
-                    public:
-                        static const std::string squabbler;
-                        static const std::string greaser;
-                        static const std::string bruiser;
-                };
-        };
-        class UnitImagePathsBkg {
-            public:
-                class Jets {
-                    public:
-                        static const std::string squabbler;
-                        static const std::string greaser;
-                        static const std::string bruiser;
-                };
-                class Sharks {
-                    public:
-                        static const std::string squabbler;
-                        static const std::string greaser;
-                        static const std::string bruiser;
-                };
-        };
-        class TileImagePaths {
-            public:
-                static const std::string road_path; 
-                static const std::string grass_path;
-                static const std::string concrete_path;
-                static const std::string roof_path;
-                static const std::string trash_path;
-                static const std::string wall_path;
-                static const std::string empty;
-        };
-        class UnitSFXPaths {
-            public:
-                static const std::string bruiser_attack;
-                static const std::string greaser_attack;
-                static const std::string squabbler_attack;
-                static const std::string move;
-                static const std::string confirm;
-                static const std::string cancel;
-                static const std::string turn_sound;
-        };
-        static const int bruiser_movement;
-        static const int squabbler_movement;
-        static const int greaser_movement;
+struct Constants {
+    enum struct Team {
+        Sharks,
+        Jets
+    };
+    struct SFX {
+        static const std::string move;
+        static const std::string confirm;
+        static const std::string cancel;
+        static const std::string turn_sound;
+    };
+    struct Unit {
         static const int max_movement;
-        enum class ActionType {
-            Select,
-            Move,
-            Menu,
-            Attack,
-            Special
+    };
+    struct BruiserUnit {
+        struct SFX {
+            static const std::string attack;
         };
+        static const std::string jets_img;
+        static const std::string sharks_img;
+        static const std::string jets_img_bkg;
+        static const std::string sharks_img_bkg;
+        static const int max_hp;
+        static const int min_hp;
+        static const int max_strength;
+        static const int min_strength;
+        static const int max_finesse;
+        static const int min_finesse;
+        static const int max_style;
+        static const int min_style;
+        static const int max_wit;
+        static const int min_wit;
+        static const int movement_range;
+    };
+    struct GreaserUnit {
+        struct SFX {
+            static const std::string attack;
+        };
+        static const std::string jets_img;
+        static const std::string sharks_img;
+        static const std::string jets_img_bkg;
+        static const std::string sharks_img_bkg;
+        static const int max_hp;
+        static const int min_hp;
+        static const int max_strength;
+        static const int min_strength;
+        static const int max_finesse;
+        static const int min_finesse;
+        static const int max_style;
+        static const int min_style;
+        static const int max_wit;
+        static const int min_wit;
+        static const int movement_range;
+    };
+    struct SquabblerUnit {
+        struct SFX {
+            static const std::string attack;
+        };
+        static const std::string jets_img;
+        static const std::string sharks_img;
+        static const std::string jets_img_bkg;
+        static const std::string sharks_img_bkg;
+        static const int max_hp;
+        static const int min_hp;
+        static const int max_strength;
+        static const int min_strength;
+        static const int max_finesse;
+        static const int min_finesse;
+        static const int max_style;
+        static const int min_style;
+        static const int max_wit;
+        static const int min_wit;
+        static const int movement_range;
+    };
+    struct ConcreteTile {
+        static const int defense;
+        static const bool accessible; 
+        static const std::string img_path;
+    };
+    struct GrassTile {
+        static const int defense;
+        static const bool accessible; 
+        static const std::string img_path;
+    };
+    struct RoadTile {
+        static const int defense;
+        static const bool accessible; 
+        static const std::string img_paths[2];
+    };
+    struct WallTile {
+        static const int defense;
+        static const bool accessible; 
+        static const std::string img_paths[8];
+    };
+    struct SpecialTile {
+        static const int defense;
+        static const bool accessible; 
+        static const std::string img_paths[9];
+    };
+    struct SceneryTile {
+        static const int defense;
+        static const bool accessible; 
+        static const std::string img_path;
+    };
+    enum struct ActionType {
+        Select,
+        Move,
+        Menu,
+        Attack,
+        Special
+    };
 };
 
 #endif

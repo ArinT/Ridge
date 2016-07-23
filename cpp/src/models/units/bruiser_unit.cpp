@@ -9,12 +9,12 @@ using utils::randint;
 
 BruiserUnit::BruiserUnit(int x, int y, Constants::Team team) :
     Unit(
-        Constants::bruiser_movement,
-        randint(Constants::bruiser_min_hp, Constants::bruiser_max_hp),
-        randint(Constants::bruiser_min_strength, Constants::bruiser_max_strength),
-        randint(Constants::bruiser_min_finesse, Constants::bruiser_max_finesse),
-        randint(Constants::bruiser_min_wit, Constants::bruiser_max_wit),
-        randint(Constants::bruiser_min_style, Constants::bruiser_max_style),
+        Constants::BruiserUnit::movement_range,
+        randint(Constants::BruiserUnit::min_hp, Constants::BruiserUnit::max_hp),
+        randint(Constants::BruiserUnit::min_strength, Constants::BruiserUnit::max_strength),
+        randint(Constants::BruiserUnit::min_finesse, Constants::BruiserUnit::max_finesse),
+        randint(Constants::BruiserUnit::min_wit, Constants::BruiserUnit::max_wit),
+        randint(Constants::BruiserUnit::min_style, Constants::BruiserUnit::max_style),
         x,
         y,
         team

@@ -122,7 +122,7 @@ bool Map::can_go_through(int x, int y, Constants::Team team) {
 }
 
 vector<Tile*> Map::a_star(Tile* start, Tile* end, Constants::Team team) {
-    return a_star(start, end, team, Constants::max_movement);
+    return a_star(start, end, team, Constants::Unit::max_movement);
 }
 
 vector<Tile*> Map::a_star(Tile* start, Tile* end, Constants::Team team, int limit) {

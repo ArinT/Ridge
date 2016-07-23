@@ -9,12 +9,12 @@ using utils::randint;
 
 SquabblerUnit::SquabblerUnit(int x, int y, Constants::Team team) :
     Unit(
-        Constants::squabbler_movement,
-        randint(Constants::squabbler_min_hp, Constants::squabbler_max_hp),
-        randint(Constants::squabbler_min_strength, Constants::squabbler_max_strength),
-        randint(Constants::squabbler_min_finesse, Constants::squabbler_max_finesse),
-        randint(Constants::squabbler_min_wit, Constants::squabbler_max_wit),
-        randint(Constants::squabbler_min_style, Constants::squabbler_max_style),
+        Constants::SquabblerUnit::movement_range,
+        randint(Constants::SquabblerUnit::min_hp, Constants::SquabblerUnit::max_hp),
+        randint(Constants::SquabblerUnit::min_strength, Constants::SquabblerUnit::max_strength),
+        randint(Constants::SquabblerUnit::min_finesse, Constants::SquabblerUnit::max_finesse),
+        randint(Constants::SquabblerUnit::min_wit, Constants::SquabblerUnit::max_wit),
+        randint(Constants::SquabblerUnit::min_style, Constants::SquabblerUnit::max_style),
         x,
         y,
         team
