@@ -25,10 +25,12 @@ SDLWrapper::SDLWrapper(const int width, const int height, Uint32 flags) throw(In
     if (!main_window->init_window() || !main_window->init_renderer())
         throw InitError();
     SDL_SetRenderDrawColor(get_renderer(), 0xFF, 0xFF, 0xFF, 0xFF);
+    texture_manager = new TextureManager(get_renderer());
 }
 
 SDLWrapper::~SDLWrapper() {
     delete main_window;
+    delete texture_manager;
     SDL_Quit();
 }
 

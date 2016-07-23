@@ -5,6 +5,7 @@
 #include <string>
 #include "window.h"
 #include "init_error.h"
+#include "texture_manager.h"
 
 class SDLWrapper {
     public:
@@ -16,6 +17,7 @@ class SDLWrapper {
     private:
         int window_width;
         int window_height;
+        TextureManager* texture_manager;
 };
 #endif
 

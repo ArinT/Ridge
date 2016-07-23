@@ -121,6 +121,11 @@ $(BUILD_DIR)/base_texture.o : $(VIEW_DIR)/base_texture.h \
                               $(VIEW_DIR)/base_texture.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SDL_LINKER_FLAGS) -c $(VIEW_DIR)/base_texture.cpp -o $(BUILD_DIR)/base_texture.o
 
+$(BUILD_DIR)/texture_manager.o :  $(VIEW_DIR)/texture_manager.h \
+                                  $(VIEW_DIR)/texture_manager.cpp \
+                                  $(BUILD_DIR)/base_texture.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SDL_LINKER_FLAGS) -c $(VIEW_DIR)/texture_manager.cpp -o $(BUILD_DIR)/texture_manager.o
+
 $(BUILD_DIR)/init_error.o : $(VIEW_DIR)/init_error.h \
                               $(VIEW_DIR)/init_error.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SDL_LINKER_FLAGS) -c $(VIEW_DIR)/init_error.cpp -o $(BUILD_DIR)/init_error.o
@@ -131,7 +136,8 @@ $(BUILD_DIR)/window.o : $(VIEW_DIR)/window.h \
 
 $(BUILD_DIR)/sdl.o : $(VIEW_DIR)/sdl.h \
                      $(VIEW_DIR)/sdl.cpp \
-                     $(BUILD_DIR)/window.o
+                     $(BUILD_DIR)/window.o \
+                     $(BUILD_DIR)/texture_manager.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SDL_LINKER_FLAGS) -c $(VIEW_DIR)/sdl.cpp -o $(BUILD_DIR)/sdl.o
 
 # Models
