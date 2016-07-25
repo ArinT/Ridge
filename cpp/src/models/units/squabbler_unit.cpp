@@ -17,5 +17,6 @@ SquabblerUnit::SquabblerUnit(int x, int y, Constants::Team team) :
         randint(Constants::SquabblerUnit::min_style, Constants::SquabblerUnit::max_style),
         x,
         y,
-        team
+        team,
+        team == Constants::Team::Jets ? Constants::SquabblerUnit::sharks_img : Constants::SquabblerUnit::jets_img
     ) { }

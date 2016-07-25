@@ -3,6 +3,8 @@
 
 #include <string>
 #include "constants.h"
+#include "base_texture.h"
+#include "texture_manager.h"
 
 class Unit {
     public:
@@ -15,7 +17,8 @@ class Unit {
             int style,
             int x,
             int y,
-            Constants::Team team
+            Constants::Team team,
+            std::string img_path 
         );
         ~Unit();
         int get_movement_range() { return movement_range; }
@@ -28,8 +31,10 @@ class Unit {
         int get_x() { return x; }
         int get_y() { return y; }
         Constants::Team get_team() { return team; }
+        void draw(TextureManager* texture_manager);
     protected:
         int movement_range;
+        BaseTexture* texture;
         int max_hp;
         int strength;
         int finesse;
@@ -39,6 +44,7 @@ class Unit {
         int y;
         int hp;
         Constants::Team team;
+        std::string img_path;
 };
 
 #endif

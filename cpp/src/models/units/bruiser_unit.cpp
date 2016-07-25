@@ -17,5 +17,6 @@ BruiserUnit::BruiserUnit(int x, int y, Constants::Team team) :
         randint(Constants::BruiserUnit::min_style, Constants::BruiserUnit::max_style),
         x,
         y,
-        team
+        team,
+        team == Constants::Team::Jets ? Constants::BruiserUnit::sharks_img : Constants::BruiserUnit::jets_img
     ) { }

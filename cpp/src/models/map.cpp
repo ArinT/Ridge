@@ -287,7 +287,6 @@ void Node::destroy_node_set(set<Node*> s) {
     }
 }
 
-
 vector<Tile*> Map::get_neighboring_tiles(Tile* tile, Constants::Team team) {
     vector<Tile*> neighbors = {};
     int x = tile->get_x();
@@ -308,7 +307,7 @@ vector<Tile*> Map::get_neighboring_tiles(Tile* tile, Constants::Team team) {
     return neighbors;
 }
 
-bool Map::draw(TextureManager* texture_manager) {
+void Map::draw_tiles(TextureManager* texture_manager) {
     for (int i = 0; i < int(tile_matrix.size()) ; i++) {
         vector<Tile*> i_column = tile_matrix[i];
         for ( int j = 0; j < int(i_column.size()); j++ ) {
@@ -316,5 +315,16 @@ bool Map::draw(TextureManager* texture_manager) {
             t->draw(texture_manager);
         }
     }
-    return true;
+}
+
+void Map::draw_units(TextureManager* texture_manager) {
+    typedef list<Unit*>::const_iterator iterator;
+    for (iterator it = unit_list.begin(), end = unit_list.end(); it != end; ++it) {
+        (*it)->draw(texture_manager);
+    }
+}
+
+void Map::draw(TextureManager* texture_manager) {
+    draw_tiles(texture_manager);
+    draw_units(texture_manager);
 }

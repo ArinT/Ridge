@@ -153,6 +153,7 @@ $(BUILD_DIR)/constants.o : $(MODELS_DIR)/constants.h \
 
 $(BUILD_DIR)/base_unit.o : $(UNIT_DIR)/base_unit.h \
               $(UNIT_DIR)/base_unit.cpp \
+              $(BUILD_DIR)/texture_manager.o \
               $(BUILD_DIR)/constants.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(UNIT_DIR)/base_unit.cpp -o $(BUILD_DIR)/base_unit.o
 

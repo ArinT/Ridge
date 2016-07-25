@@ -33,7 +33,9 @@ class Map {
         void destroy_unit_list();
         void destroy_tile_matrix();
     public:
-        bool draw(TextureManager* texture_manager);
+        void draw(TextureManager* texture_manager);
+        void draw_tiles(TextureManager* texture_manager);
+        void draw_units(TextureManager* texture_manager);
         Tile* get_tile(int x, int y);
         bool add_unit(Unit* unit);
         bool remove_unit(Unit* unit);

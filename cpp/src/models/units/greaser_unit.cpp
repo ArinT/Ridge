@@ -17,5 +17,6 @@ GreaserUnit::GreaserUnit(int x, int y, Constants::Team team) :
         randint(Constants::GreaserUnit::min_style, Constants::GreaserUnit::max_style),
         x,
         y,
-        team
+        team,
+        team == Constants::Team::Jets ? Constants::GreaserUnit::sharks_img : Constants::GreaserUnit::jets_img
     ) { }

@@ -320,7 +320,7 @@ TEST_F(MapTest, AStarVeryLongSuccess) {
     Tile* t1 = map->get_tile(0,0);
     Tile* t2 = map->get_tile(31,17);
     vector<Tile*> path = map->a_star(t1, t2, Constants::Team::Sharks, 100);
-    EXPECT_EQ(75, int(path.size()));
+    EXPECT_EQ(49, int(path.size()));
     EXPECT_TRUE(all_tiles_adjacent(path));
 }
 
