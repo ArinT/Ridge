@@ -16,6 +16,9 @@ struct Constants {
     struct Unit {
         static const int max_movement;
     };
+    struct GameStateImg {
+        static const std::string cursor;
+    };
     struct BruiserUnit {
         struct SFX {
             static const std::string attack;

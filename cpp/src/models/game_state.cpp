@@ -4,35 +4,48 @@
 #include "greaser_unit.h"
 #include "bruiser_unit.h"
 #include "squabbler_unit.h"
+#include "base_unit.h"
+#include "cursor.h"
 
 #include "texture_manager.h"
 
 GameState::GameState() {
+    cursor = new Cursor(); 
     set_up_default();
 }
 
 void GameState::set_up_default() {
     map = new Map(32, 18);
     map->generate_from_ascii("data/maps/TheBlock.txt");
-    GreaserUnit* g1 = new GreaserUnit(3,0, Constants::Team::Jets);
-    GreaserUnit* g2 = new GreaserUnit(3,1, Constants::Team::Jets);
-    GreaserUnit* g3 = new GreaserUnit(3,2, Constants::Team::Jets);
-    GreaserUnit* g4 = new GreaserUnit(2,3, Constants::Team::Jets);
-    GreaserUnit* g5 = new GreaserUnit(1,3, Constants::Team::Jets);
-    GreaserUnit* g6 = new GreaserUnit(0,3, Constants::Team::Jets);
-    map->add_unit(g1);
-    map->add_unit(g2);
-    map->add_unit(g3);
-    map->add_unit(g4);
-    map->add_unit(g5);
-    map->add_unit(g6);
+    GreaserUnit* unit4 = new GreaserUnit(12, 6, Constants::Team::Jets);
+    SquabblerUnit* unit5 = new SquabblerUnit(14, 4, Constants::Team::Jets);
+    GreaserUnit* unit6 = new GreaserUnit(13, 5, Constants::Team::Jets);
+    SquabblerUnit* unit7 = new SquabblerUnit(17,6, Constants::Team::Jets);
+    BruiserUnit* unit8 = new BruiserUnit(18,6,Constants::Team::Jets);
+    GreaserUnit* unit1 = new GreaserUnit(12, 15, Constants::Team::Sharks);
+    BruiserUnit* unit2 = new BruiserUnit(13, 16, Constants::Team::Sharks);
+    SquabblerUnit* unit3 = new SquabblerUnit(16, 16, Constants::Team::Sharks);
+    BruiserUnit* unit9 = new BruiserUnit(17, 14, Constants::Team::Sharks);
+    GreaserUnit* unit10 = new GreaserUnit(14, 14, Constants::Team::Sharks);
+
+    map->add_unit(unit1);
+    map->add_unit(unit2);
+    map->add_unit(unit3);
+    map->add_unit(unit4);
+    map->add_unit(unit5);
+    map->add_unit(unit6);
+    map->add_unit(unit7);
+    map->add_unit(unit8);
+    map->add_unit(unit9);
+    map->add_unit(unit10);
 }
 
 GameState::~GameState() {
     delete map;
+    delete cursor;
 }
 
-bool GameState::draw(TextureManager* texture_manager) {
+void GameState::draw(TextureManager* texture_manager) {
     map->draw(texture_manager);
-    return true;
+    cursor->draw(texture_manager);
 }

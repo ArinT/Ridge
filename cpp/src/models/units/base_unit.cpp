@@ -29,7 +29,9 @@ Unit::Unit(
     hp = max_hp;
     texture = NULL;
 }
+
 Unit::~Unit() {
+    texture = NULL;
 }
 
 void Unit::draw(TextureManager* texture_manager) {

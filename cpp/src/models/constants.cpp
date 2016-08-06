@@ -48,9 +48,11 @@ const std::string Constants::GreaserUnit::jets_img_bkg     = "data/pixel_art/j_g
 const std::string Constants::GreaserUnit::sharks_img_bkg   = "data/pixel_art/s_gr_bkg.png";
 
 const std::string Constants::BruiserUnit::jets_img         = "data/pixel_art/j_br.png";
-const std::string Constants::BruiserUnit::sharks_img        = "data/pixel_art/s_br.png";
+const std::string Constants::BruiserUnit::sharks_img       = "data/pixel_art/s_br.png";
 const std::string Constants::BruiserUnit::jets_img_bkg     = "data/pixel_art/j_br_bkg.png";
-const std::string Constants::BruiserUnit::sharks_img_bkg    = "data/pixel_art/s_br_bkg.png";
+const std::string Constants::BruiserUnit::sharks_img_bkg   = "data/pixel_art/s_br_bkg.png";
+
+const std::string Constants::GameStateImg::cursor          = "data/pixel_art/cursor.png";
 
 const std::string Constants::BruiserUnit::SFX::attack      = "sfx/woosh.wav";
 const std::string Constants::GreaserUnit::SFX::attack      = "sfx/switchblade.wav";

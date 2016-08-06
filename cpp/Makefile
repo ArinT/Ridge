@@ -190,6 +190,13 @@ $(BUILD_DIR)/sub_tile.o : $(TILE_DIR)/sub_tile.h \
              $(BUILD_DIR)/base_tile.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TILE_DIR)/sub_tile.cpp -o $(BUILD_DIR)/sub_tile.o
 
+$(BUILD_DIR)/cursor.o : $(MODELS_DIR)/cursor.h \
+        $(MODELS_DIR)/cursor.cpp \
+        $(BUILD_DIR)/constants.o \
+        $(BUILD_DIR)/base_texture.o \
+        $(BUILD_DIR)/texture_manager.o 
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(MODELS_DIR)/cursor.cpp -o $(BUILD_DIR)/cursor.o
+
 $(BUILD_DIR)/map.o : $(MODELS_DIR)/map.h \
         $(MODELS_DIR)/map.cpp \
         $(BUILD_DIR)/constants.o \
@@ -201,9 +208,13 @@ $(BUILD_DIR)/map.o : $(MODELS_DIR)/map.h \
 $(BUILD_DIR)/game_state.o : $(MODELS_DIR)/game_state.h \
         $(MODELS_DIR)/game_state.cpp \
         $(BUILD_DIR)/map.o \
+        $(BUILD_DIR)/cursor.o \
         $(BUILD_DIR)/constants.o \
         $(BUILD_DIR)/base_tile.o \
         $(BUILD_DIR)/base_unit.o \
+        $(BUILD_DIR)/greaser_unit.o \
+        $(BUILD_DIR)/bruiser_unit.o \
+        $(BUILD_DIR)/squabbler_unit.o \
         $(BUILD_DIR)/texture_manager.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(MODELS_DIR)/game_state.cpp -o $(BUILD_DIR)/game_state.o
 
@@ -257,6 +268,7 @@ OBJS = $(BUILD_DIR)/base_unit.o \
        $(BUILD_DIR)/base_tile.o \
        $(BUILD_DIR)/constants.o \
        $(BUILD_DIR)/map.o \
+       $(BUILD_DIR)/cursor.o \
        $(BUILD_DIR)/sub_tile.o \
        $(BUILD_DIR)/utils.o \
        $(BUILD_DIR)/greaser_unit.o \
