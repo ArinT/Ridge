@@ -36,7 +36,8 @@ TESTS = $(BUILD_DIR)/base_tile_unittest \
         $(BUILD_DIR)/constants_unittest \
         $(BUILD_DIR)/map_unittest \
         $(BUILD_DIR)/sub_tile_unittest \
-        $(BUILD_DIR)/sub_unit_unittest
+        $(BUILD_DIR)/sub_unit_unittest \
+        $(BUILD_DIR)/cursor_unittest
 
 PROGRAM = Ridge
 
@@ -252,6 +253,11 @@ $(BUILD_DIR)/map_unittest.o : $(TEST_DIR)/map_unittest.cpp \
                  $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/map_unittest.cpp -o $(BUILD_DIR)/map_unittest.o
 
+$(BUILD_DIR)/cursor_unittest.o : $(TEST_DIR)/cursor_unittest.cpp \
+                 $(BUILD_DIR)/cursor.o \
+                 $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/cursor_unittest.cpp -o $(BUILD_DIR)/cursor_unittest.o
+
 $(BUILD_DIR)/constants_unittest.o : $(TEST_DIR)/constants_unittest.cpp \
                        $(BUILD_DIR)/constants.o \
                        $(GTEST_HEADERS)
@@ -299,6 +305,9 @@ $(BUILD_DIR)/constants_unittest : $(OBJS) $(BUILD_DIR)/constants_unittest.o $(BU
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ $(SDL_LINKER_FLAGS) -o $@
 
 $(BUILD_DIR)/map_unittest : $(OBJS) $(BUILD_DIR)/map_unittest.o $(BUILD_DIR)/gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ $(SDL_LINKER_FLAGS) -o $@
+
+$(BUILD_DIR)/cursor_unittest : $(OBJS) $(BUILD_DIR)/cursor_unittest.o $(BUILD_DIR)/gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ $(SDL_LINKER_FLAGS) -o $@
 
 Ridge : $(OBJS) $(BUILD_DIR)/ridge.o

@@ -9,13 +9,19 @@
 
 class Cursor {
     public:
-        Cursor();
+        Cursor(int start_x, int start_y, int width, int height);
         ~Cursor();
         std::tuple<int, int> get_position();
         void draw(TextureManager* texture_manager);
+        bool move_up();
+        bool move_down();
+        bool move_left();
+        bool move_right();
     private:
         int x;
         int y;
+        int width;
+        int height;
         BaseTexture* texture;
         std::string img_path = Constants::GameStateImg::cursor;
 };

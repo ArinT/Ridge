@@ -10,7 +10,7 @@
 #include "texture_manager.h"
 
 GameState::GameState() {
-    cursor = new Cursor(); 
+    cursor = new Cursor(0, 0, 32, 18); 
     set_up_default();
 }
 

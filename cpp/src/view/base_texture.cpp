@@ -16,8 +16,12 @@ BaseTexture::BaseTexture(SDL_Renderer* renderer) :
 
 BaseTexture::BaseTexture(SDL_Renderer* renderer, std::string path) :
     renderer(renderer) {
-    load(path);
+	texture = NULL;
+	texture_width = 0;
+	texture_height = 0;
+	pixels = NULL;
     texture_pitch = 0;
+    load(path);
 }
 
 void BaseTexture::free() {

@@ -19,6 +19,16 @@ bool Controller::handle_events() {
         if( e.type == SDL_QUIT ) {
             exit = true;
         }
+		const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL );
+		if( currentKeyStates[ SDL_SCANCODE_UP ] ) {
+            game_state->get_cursor()->move_up();
+		} else if( currentKeyStates[ SDL_SCANCODE_DOWN ] ) {
+            game_state->get_cursor()->move_down();
+		} else if( currentKeyStates[ SDL_SCANCODE_LEFT ] ) {
+            game_state->get_cursor()->move_left();
+		} else if( currentKeyStates[ SDL_SCANCODE_RIGHT ] ) {
+            game_state->get_cursor()->move_right();
+		}
     }
     return exit;
 }
