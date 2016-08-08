@@ -11,6 +11,7 @@ class Controller {
     private:
         GameState* game_state;
         SDLWrapper* sdl;
+        Cursor* cursor;
 };
 
 #endif
