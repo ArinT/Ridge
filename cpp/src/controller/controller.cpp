@@ -13,11 +13,16 @@ Controller::~Controller() {
     game_state = NULL;
 }
 
+bool Controller::quit_event(SDL_Event &e) {
+    return e.type == SDL_QUIT || e.key.keysym.sym == SDLK_ESCAPE || (e.key.keysym.sym == SDLK_c && e.key.keysym.mod == KMOD_LCTRL);
+}
+
 bool Controller::handle_events() {
     SDL_Event e;
     bool exit = false;
     while( SDL_PollEvent( &e ) != 0 ) {
-        if( e.type == SDL_QUIT ) {
+        if(quit_event(e)) {
+            SDL_Log("Program quit after %i ticks", e.quit.timestamp);
             exit = true;
         }
 		const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL );
@@ -29,7 +34,11 @@ bool Controller::handle_events() {
             cursor->move_left();
 		} else if( currentKeyStates[ SDL_SCANCODE_RIGHT ] ) {
             cursor->move_right();
-		}
+		} else if ( currentKeyStates[ SDL_SCANCODE_Z ] ) {
+            game_state->confirm();
+        } else if ( currentKeyStates[ SDL_SCANCODE_X ] ) {
+            game_state->confirm();
+        }
     }
     return exit;
 }

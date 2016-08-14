@@ -8,6 +8,7 @@ class Controller {
         Controller(SDLWrapper* sdl, GameState* game_state);
         ~Controller();
         bool handle_events();
+        bool quit_event(SDL_Event &e);
     private:
         GameState* game_state;
         SDLWrapper* sdl;

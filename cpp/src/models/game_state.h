@@ -10,6 +10,8 @@ class GameState {
         ~GameState();
         void draw(TextureManager* texture_manager);
         void set_up_default();
+        bool confirm();
+        bool cancel();
         Map* get_map() { return map; };
         Cursor* get_cursor() { return cursor; };
     private:

@@ -14,6 +14,14 @@ GameState::GameState() {
     set_up_default();
 }
 
+bool GameState::confirm() {
+    return true;
+}
+
+bool GameState::cancel() {
+    return true;
+}
+
 void GameState::set_up_default() {
     map = new Map(32, 18);
     map->generate_from_ascii("data/maps/TheBlock.txt");

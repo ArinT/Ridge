@@ -9,7 +9,12 @@
 
 class Cursor {
     public:
-        Cursor(int start_x, int start_y, int width, int height);
+        Cursor(
+            int start_x,
+            int start_y, 
+            int width, 
+            int height
+        );
         ~Cursor();
         std::tuple<int, int> get_position();
         void draw(TextureManager* texture_manager);
@@ -17,6 +22,8 @@ class Cursor {
         bool move_down();
         bool move_left();
         bool move_right();
+        int get_x() { return x; };
+        int get_y() { return y; };
     private:
         int x;
         int y;
