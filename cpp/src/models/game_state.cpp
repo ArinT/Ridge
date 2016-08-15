@@ -15,11 +15,32 @@ GameState::GameState() {
 }
 
 bool GameState::confirm() {
+    Unit* unit = map->unit_at(12, 6);
+    if (unit != NULL) {
+        map->move(unit, 14, 6);
+    }
     return true;
 }
 
 bool GameState::cancel() {
     return true;
+}
+
+bool GameState::cursor_up() {
+    return cursor->move_up();
+}
+
+bool GameState::cursor_down() {
+    return cursor->move_down();
+}
+
+bool GameState::cursor_left() {
+
+    return cursor->move_left();
+}
+
+bool GameState::cursor_right() {
+    return cursor->move_right();
 }
 
 void GameState::set_up_default() {

@@ -4,8 +4,6 @@
 #include <fstream>
 #include <set>
 
-#include <stdio.h>
-
 #include "constants.h"
 #include "map.h"
 #include "base_tile.h"
@@ -108,6 +106,13 @@ bool Map::can_go_to(int x, int y) {
         is_accessible(x, y) &&
         !is_occupied(x, y)
     );
+}
+
+bool Map::move(Unit* unit, int x, int y) { 
+    tile_matrix[unit->get_x()][unit->get_y()]->remove_unit();
+    tile_matrix[x][y]->add_unit(unit);
+    unit->move(x, y);
+    return true;
 }
 
 bool Map::out_of_bounds(int x, int y) {

@@ -47,6 +47,7 @@ class Map {
         bool can_go_through(int x, int y, Constants::Team team);
         bool out_of_bounds(int x, int y);
         void lay_tile(char c, int x, int y);
+        bool move(Unit* unit, int x, int y);
         vector<Tile*> a_star(Tile* start, Tile* goal, Constants::Team team);
         vector<Tile*> a_star(Tile* start, Tile* goal, Constants::Team team, int limit);
         vector<Tile*> get_neighboring_tiles(Tile* tile, Constants::Team team); 

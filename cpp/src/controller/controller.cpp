@@ -2,10 +2,9 @@
 #include "game_state.h"
 #include "controller.h"
 
-Controller::Controller(SDLWrapper* sdl, GameState* game_state) {
-    sdl = sdl;
-    game_state = game_state;
-    cursor = game_state->get_cursor(); 
+Controller::Controller(SDLWrapper*& sdl_ptr, GameState*& game_state_ptr) {
+    sdl = sdl_ptr;
+    game_state = game_state_ptr;
 }
 
 Controller::~Controller() {
@@ -27,13 +26,13 @@ bool Controller::handle_events() {
         }
 		const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL );
 		if( currentKeyStates[ SDL_SCANCODE_UP ] ) {
-            cursor->move_up();
+            game_state->cursor_up();
 		} else if( currentKeyStates[ SDL_SCANCODE_DOWN ] ) {
-            cursor->move_down();
+            game_state->cursor_down();
 		} else if( currentKeyStates[ SDL_SCANCODE_LEFT ] ) {
-            cursor->move_left();
+            game_state->cursor_left();
 		} else if( currentKeyStates[ SDL_SCANCODE_RIGHT ] ) {
-            cursor->move_right();
+            game_state->cursor_right();
 		} else if ( currentKeyStates[ SDL_SCANCODE_Z ] ) {
             game_state->confirm();
         } else if ( currentKeyStates[ SDL_SCANCODE_X ] ) {

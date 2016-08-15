@@ -10,7 +10,7 @@ RidgeMVC::RidgeMVC(int width, int height) {
         SDL_INIT_VIDEO|SDL_INIT_TIMER
     );
     game_state = new GameState();
-    controller = new Controller(sdl, game_state);
+    controller = new Controller( sdl, game_state);
 }
 
 RidgeMVC::~RidgeMVC() {

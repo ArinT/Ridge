@@ -12,6 +12,10 @@ class GameState {
         void set_up_default();
         bool confirm();
         bool cancel();
+        bool cursor_up();
+        bool cursor_down();
+        bool cursor_left();
+        bool cursor_right();
         Map* get_map() { return map; };
         Cursor* get_cursor() { return cursor; };
     private:

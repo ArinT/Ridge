@@ -41,4 +41,9 @@ void Unit::draw(TextureManager* texture_manager) {
         texture = texture_manager->fetch_texture(img_path);
         texture->render(x*60, y*60);
     }
-} 
+}
+
+bool Unit::move(int dest_x, int dest_y) {
+    x = dest_x;
+    y = dest_y;
+}
