@@ -33,6 +33,7 @@ class Unit {
         bool move(int dest_x, int dest_y);
         Constants::Team get_team() { return team; };
         void draw(TextureManager* texture_manager);
+        void draw(TextureManager* texture_manager, int x,int y);
     protected:
         int movement_range;
         BaseTexture* texture;

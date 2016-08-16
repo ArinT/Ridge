@@ -6,11 +6,14 @@
 #include "squabbler_unit.h"
 #include "base_unit.h"
 #include "cursor.h"
+#include "info_pane.h"
 
 #include "texture_manager.h"
 
 GameState::GameState() {
-    cursor = new Cursor(0, 0, 32, 18); 
+    cursor = new Cursor(0, 0, 32, 18);
+    GameState* game_state = (GameState*)this;
+    info_pane = new InfoPane(game_state); 
     set_up_default();
 }
 
@@ -35,7 +38,6 @@ bool GameState::cursor_down() {
 }
 
 bool GameState::cursor_left() {
-
     return cursor->move_left();
 }
 
@@ -77,4 +79,5 @@ GameState::~GameState() {
 void GameState::draw(TextureManager* texture_manager) {
     map->draw(texture_manager);
     cursor->draw(texture_manager);
+    info_pane->draw(texture_manager);
 }

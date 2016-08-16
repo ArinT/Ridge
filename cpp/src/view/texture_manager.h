@@ -14,6 +14,7 @@ class TextureManager {
         BaseTexture* fetch_texture(string path);
         TextureManager(SDL_Renderer* renderer);
         ~TextureManager();
+        SDL_Renderer* get_renderer() { return renderer; };
     private:
         map<string, BaseTexture*> texture_map;
         SDL_Renderer* renderer;

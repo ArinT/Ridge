@@ -3,6 +3,7 @@
 #include "map.h"
 #include "cursor.h"
 #include "texture_manager.h"
+#include "info_pane.h"
 
 class GameState {
     public:
@@ -20,6 +21,7 @@ class GameState {
         Cursor* get_cursor() { return cursor; };
     private:
         Map* map;
-        Cursor* cursor; 
+        Cursor* cursor;
+        InfoPane* info_pane; 
 };
 #endif

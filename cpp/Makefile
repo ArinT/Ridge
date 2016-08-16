@@ -144,6 +144,13 @@ $(BUILD_DIR)/sdl.o : $(VIEW_DIR)/sdl.h \
 
 # Models
 
+$(BUILD_DIR)/info_pane.o :  $(MODELS_DIR)/info_pane.h \
+                            $(MODELS_DIR)/info_pane.cpp \
+                            $(BUILD_DIR)/texture_manager.o \
+                            $(BUILD_DIR)/game_state.o \
+                            $(BUILD_DIR)/base_texture.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SDL_LINKER_FLAGS) -c $(MODELS_DIR)/info_pane.cpp -o $(BUILD_DIR)/info_pane.o
+
 $(BUILD_DIR)/utils.o : $(MODELS_DIR)/utils.h \
           $(MODELS_DIR)/utils.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(MODELS_DIR)/utils.cpp -o $(BUILD_DIR)/utils.o
@@ -210,6 +217,7 @@ $(BUILD_DIR)/game_state.o : $(MODELS_DIR)/game_state.h \
         $(MODELS_DIR)/game_state.cpp \
         $(BUILD_DIR)/map.o \
         $(BUILD_DIR)/cursor.o \
+        $(BUILD_DIR)/info_pane.o \
         $(BUILD_DIR)/constants.o \
         $(BUILD_DIR)/base_tile.o \
         $(BUILD_DIR)/base_unit.o \
@@ -275,6 +283,7 @@ OBJS = $(BUILD_DIR)/base_unit.o \
        $(BUILD_DIR)/constants.o \
        $(BUILD_DIR)/map.o \
        $(BUILD_DIR)/cursor.o \
+       $(BUILD_DIR)/info_pane.o \
        $(BUILD_DIR)/sub_tile.o \
        $(BUILD_DIR)/utils.o \
        $(BUILD_DIR)/greaser_unit.o \
