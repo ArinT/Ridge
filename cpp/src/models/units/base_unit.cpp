@@ -34,12 +34,12 @@ Unit::~Unit() {
     texture = NULL;
 }
 
-void Unit::draw(TextureManager* texture_manager, int xloc, int yloc) {
+void Unit::draw(TextureManager* texture_manager, int x, int y) {
     if (texture != NULL) {
-        texture->render(xloc*60, yloc*60);
+        texture->render(x*60, y*60);
     } else {
         texture = texture_manager->fetch_texture(img_path);
-        texture->render(xloc*60, yloc*60);
+        texture->render(x*60, y*60);
     }
 }
 

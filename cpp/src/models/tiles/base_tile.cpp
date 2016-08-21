@@ -47,6 +47,10 @@ int Tile::manhattan_distance(Tile* dest) {
 }
 
 void Tile::draw(TextureManager* texture_manager) {
+    draw(texture_manager, x, y);
+}
+
+void Tile::draw(TextureManager* texture_manager, int x, int y) {
     if (texture != NULL) {
         texture->render(x*60, y*60);
     } else {

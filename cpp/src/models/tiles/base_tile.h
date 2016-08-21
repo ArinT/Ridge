@@ -29,6 +29,7 @@ class Tile {
         bool is_marked() { return marked; }
         bool is_attack_marked() { return attack_marked; }
         void draw(TextureManager* texture_manager);
+        void draw(TextureManager* texture_manager, int x, int y);
         Unit* get_unit() { return unit; } 
     protected:
         BaseTexture* texture;
