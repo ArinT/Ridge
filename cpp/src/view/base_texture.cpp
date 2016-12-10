@@ -1,6 +1,7 @@
 #include <string>
 #include <sstream>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 
 #include "base_texture.h"
 #include "init_error.h"
@@ -22,6 +23,24 @@ BaseTexture::BaseTexture(SDL_Renderer* renderer, std::string path) :
 	pixels = NULL;
     texture_pitch = 0;
     load(path);
+}
+
+bool BaseTexture::load_text(TTF_Font* font, std::string text, SDL_Color text_color) {
+	free();
+	SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), text_color );
+	if( surface == NULL ) {
+		printf( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
+	} else {
+        texture = SDL_CreateTextureFromSurface( renderer, surface );
+		if( texture == NULL ) {
+			printf( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
+		} else {
+			texture_width = surface->w;
+			texture_height = surface->h;
+		}
+		SDL_FreeSurface( surface );
+	}
+	return texture != NULL;
 }
 
 void BaseTexture::free() {

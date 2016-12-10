@@ -1,6 +1,7 @@
 #include <string>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 
 #include "init_error.h"
 
@@ -12,6 +13,7 @@ class BaseTexture {
         BaseTexture(SDL_Renderer* renderer, std::string);
         ~BaseTexture();
         bool load(std::string path) throw(InitError);
+        bool load_text(TTF_Font* font, std::string text, SDL_Color text_color);
         void free();
         bool create_blank(int width, int height, SDL_TextureAccess access);
         void set_color(Uint8 red, Uint8 green, Uint8 blue);
